@@ -1,0 +1,168 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import logo_ylbkd from "@/asset/home/logo-300x124.webp";
+import { MapPin, Mail, Globe } from "lucide-react";
+import { useAutoTranslate } from "../translate/useAutoTranslate";
+
+const Footer = () => {
+  const navLinks = [
+    { label: useAutoTranslate("Beranda"), href: "/" },
+    { label: useAutoTranslate("Tentang Kami"), href: "/tentang-kami" },
+    { label: useAutoTranslate("Berita"), href: "/berita" },
+    { label: useAutoTranslate("Projek Kami"), href: "/projek-kami" },
+    { label: useAutoTranslate("Kemitraan"), href: "/kemitraan" },
+    { label: useAutoTranslate("Publikasi"), href: "/publikasi" },
+    { label: useAutoTranslate("Kontak Kami"), href: "/kontak-kami" },
+  ];
+
+  const contactInfo = [
+    {
+      label: "yayasan.lautbiruderawan@gmail.com",
+      href: "mailto:yayasan.lautbiruderawan@gmail.com",
+      icon: Mail,
+      type: "email"
+    },
+    {
+      label: "dadang@globalconservation.org",
+      href: "mailto:dadang@globalconservation.org",
+      icon: Mail,
+      type: "email"
+    }
+  ];
+
+
+
+  return (
+    <footer className="relative w-full overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50">
+        <div className="absolute inset-0 opacity-30">
+          <svg className="absolute bottom-0 w-full h-20" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,60 C150,100 350,20 600,60 C850,100 1050,20 1200,60 L1200,120 L0,120 Z" fill="rgba(59, 130, 246, 0.1)"/>
+          </svg>
+          <svg className="absolute bottom-0 w-full h-16" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,80 C200,40 400,120 600,80 C800,40 1000,120 1200,80 L1200,120 L0,120 Z" fill="rgba(6, 182, 212, 0.08)"/>
+          </svg>
+        </div>
+      </div>
+
+      <div className="relative z-10 px-4 sm:px-6 lg:px-8 font-AktivGrotesk-Regular">
+        <div className="max-w-7xl mx-auto">
+          <div className="pt-16 pb-12">
+            <div className="grid grid-cols-1 lg:grid-cols-10 gap-12 lg:gap-8">
+              <div className="lg:col-span-4 space-y-6">
+                <div className="space-y-4">
+                  <Image
+                    src={logo_ylbkd}
+                    alt="Logo YLBKD"
+                    width={180}
+                    height={60}
+                    className="h-14 w-auto"
+                  />
+                  <p className="text-gray-700 leading-relaxed max-w-sm">
+                    {useAutoTranslate("Berdedikasi untuk pelestarian ekosistem laut dan darat melalui pendekatan kolaboratif dan berkelanjutan di Indonesia.")}
+                  </p>
+                </div>
+                
+                <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-blue-100 shadow-sm">
+                  <h3 className="font-semibold text-gray-900 mb-2 font-AktivGrotesk-Regular">
+                    {useAutoTranslate("Dukung Yayasan Kami")}
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-4 font-AktivGrotesk-Regular">
+                    {useAutoTranslate("Setiap kontribusi membantu melindungi keajaiban bawah laut Indonesia")}
+                  </p>
+                  <Button className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-medium py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 font-AktivGrotesk-Regular">
+                    <Link href="/donasi" className="flex items-center justify-center gap-2">
+                      {useAutoTranslate("Donasi Sekarang")}
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+
+              <div className="lg:col-span-2">
+                <h3 className="font-semibold text-gray-900 mb-6 text-lg font-AktivGrotesk-Regular">
+                  {useAutoTranslate("Navigasi")}
+                </h3>
+                <ul className="space-y-3">
+                  {navLinks.map((link) => (
+                    <li key={link.href}>
+                      <Link 
+                        href={link.href} 
+                        className="text-gray-600 hover:text-blue-600 transition-colors duration-200 flex items-center group font-AktivGrotesk-Regular"
+                      >
+                        <span className="w-1 h-1 bg-cyan-400 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="lg:col-span-4 space-y-8">
+                <div>
+                  <h3 className="font-semibold capitalize text-gray-900 mb-6 text-lg font-AktivGrotesk-Regular">
+                    {useAutoTranslate("Hubungi Kami")}
+                  </h3>
+                  <div className="space-y-4">
+                    {contactInfo.map((contact) => {
+                      const IconComponent = contact.icon;
+                      return (
+                        <a
+                          key={contact.href}
+                          href={contact.href}
+                          target={contact.type === 'website' ? '_blank' : undefined}
+                          rel={contact.type === 'website' ? 'noopener noreferrer' : undefined}
+                          className="flex items-start gap-3 text-gray-600 hover:text-blue-600 transition-colors duration-200 group font-AktivGrotesk-Regular"
+                        >
+                          <div className="w-10 h-10 bg-white/60 backdrop-blur-sm rounded-xl flex items-center justify-center border border-blue-100 group-hover:border-blue-200 group-hover:bg-blue-50/60 transition-all duration-200">
+                            <IconComponent className="w-4 h-4" />
+                          </div>
+                          <div className="flex-1 pt-2">
+                            <span className="break-words leading-relaxed">
+                              {contact.label}
+                            </span>
+                          </div>
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold capitalize text-gray-900 mb-4 text-lg font-AktivGrotesk-Regular">
+                    {useAutoTranslate("Lokasi Kami")}
+                  </h3>
+                  <div className="flex items-start gap-3 text-gray-600">
+                    <div className="w-10 h-10 bg-white/60 backdrop-blur-sm rounded-xl flex items-center justify-center border border-blue-100">
+                      <MapPin className="w-4 h-4" />
+                    </div>
+                    <address className="not-italic leading-relaxed pt-2 flex-1 font-AktivGrotesk-Regular">
+                      Jl. AMD, Gg. 5,<br />
+                      Kel. Lempake, Kec. Samarinda Utara,<br />
+                      Kota Samarinda, Kalimantan Timur,<br />
+                      Indonesia
+                    </address>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-blue-200/50 py-8">
+            <div className="text-sm text-gray-600 font-AktivGrotesk-Regular">
+              <div className="flex justify-start md:justify-center">
+                <p className="text-left md:text-center">
+                  &copy; {new Date().getFullYear()} {useAutoTranslate("YLBKD. Seluruh hak cipta dilindungi.")}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
