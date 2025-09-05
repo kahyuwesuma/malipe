@@ -29,7 +29,7 @@ const DonationCTA = () => {
               {useAutoTranslate("Setiap donasi yang Anda berikan akan membantu program pelestarian alam, edukasi, dan aksi nyata di lapangan.")}
             </p>
           </div>
-          <Link href="/donasi">
+          <Link href="https://paypal.me/Malipe2021" target="_blank" rel="noopener noreferrer">        
             <Button
               size="lg"
               className="bg-white cursor-pointer border border-white text-blue-ylbkd font-semibold hover:bg-blue-ylbkd hover:text-white"

@@ -12,25 +12,19 @@ const Footer = () => {
     { label: useAutoTranslate("Beranda"), href: "/" },
     { label: useAutoTranslate("Tentang Kami"), href: "/tentang-kami" },
     { label: useAutoTranslate("Berita"), href: "/berita" },
-    { label: useAutoTranslate("Projek Kami"), href: "/projek-kami" },
-    { label: useAutoTranslate("Kemitraan"), href: "/kemitraan" },
+    { label: useAutoTranslate("Ekowisata"), href: "/ekowisata" },
+    { label: useAutoTranslate("Galeri"), href: "/galeri" },
     { label: useAutoTranslate("Publikasi"), href: "/publikasi" },
     { label: useAutoTranslate("Kontak Kami"), href: "/kontak-kami" },
   ];
 
   const contactInfo = [
     {
-      label: "yayasan.lautbiruderawan@gmail.com",
-      href: "mailto:yayasan.lautbiruderawan@gmail.com",
+      label: "Malipemaratuapedulipenyu@gmail.com",
+      href: "mailto:Malipemaratuapedulipenyu@gmail.com",
       icon: Mail,
       type: "email"
     },
-    {
-      label: "dadang@globalconservation.org",
-      href: "mailto:dadang@globalconservation.org",
-      icon: Mail,
-      type: "email"
-    }
   ];
 
 
@@ -139,9 +133,9 @@ const Footer = () => {
                       <MapPin className="w-4 h-4" />
                     </div>
                     <address className="not-italic leading-relaxed pt-2 flex-1 font-AktivGrotesk-Regular">
-                      Jl. AMD, Gg. 5,<br />
-                      Kel. Lempake, Kec. Samarinda Utara,<br />
-                      Kota Samarinda, Kalimantan Timur,<br />
+                      AKB. Sanipah 1 Gang. 3 No. 30 RT. 19<br />
+                      Kel. Bugis, Kec. Tanjung Redeb,<br />
+                      Kabupaten Berau, Kalimantan Timur,<br />
                       Indonesia
                     </address>
                   </div>
@@ -154,7 +148,7 @@ const Footer = () => {
             <div className="text-sm text-gray-600 font-AktivGrotesk-Regular">
               <div className="flex justify-start md:justify-center">
                 <p className="text-left md:text-center">
-                  &copy; {new Date().getFullYear()} {useAutoTranslate("YLBKD. Seluruh hak cipta dilindungi.")}
+                  &copy; {new Date().getFullYear()} {useAutoTranslate("MALIPE. Seluruh hak cipta dilindungi.")}
                 </p>
               </div>
             </div>

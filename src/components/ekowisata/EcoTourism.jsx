@@ -1,37 +1,107 @@
 'use client';
 import { useState } from "react"
-import { Clock, MapPin, Users, Camera, Waves, TreePine, Phone, ChevronDown, ChevronUp, AlertCircle, CheckCircle2, Calendar, Info, Shield, Sun, Moon, Sunrise, Sunset } from "lucide-react"
+import { Clock, MapPin, Users, Camera, Waves, TreePine, Phone, ChevronDown, ChevronUp, AlertCircle, CheckCircle2, Calendar, Info, Shield, Sun, Moon, Sunrise, Sunset, ChevronLeft, ChevronRight } from "lucide-react"
 
-const TimelineItem = ({ time, desc, isLast, dayColor, timeIcon, category }) => (
-  <div className="relative flex items-start gap-6 pb-8">
-    {/* Timeline Line */}
-    {!isLast && (
-      <div className={`absolute left-6 top-12 w-0.5 h-full bg-gradient-to-b ${dayColor.gradient}`}></div>
-    )}
-    
-    {/* Timeline Node */}
-    <div className={`relative z-10 w-12 h-12 ${dayColor.bg} rounded-full flex items-center justify-center shadow-lg border-4 border-white`}>
-      {timeIcon}
-    </div>
-    
-    {/* Content */}
-    <div className="flex-1 pt-1">
-      <div className={`${dayColor.cardBg} rounded-xl p-4 shadow-md border ${dayColor.border} hover:shadow-lg transition-shadow`}>
-        <div className="flex items-center justify-between mb-2">
-          <div className={`${dayColor.timeBg} ${dayColor.timeText} px-3 py-1 rounded-lg text-sm font-bold inline-block`}>
-            {time}
-          </div>
-          {category && (
-            <span className={`px-2 py-1 ${dayColor.categoryBg} ${dayColor.categoryText} rounded-full text-xs font-medium`}>
-              {category}
-            </span>
-          )}
+const TimelineCard = ({ item, dayColor, isActive }) => (
+  <div className={`flex-shrink-0 w-80 mx-4 transition-all duration-300 ${isActive ? 'scale-105' : 'scale-95 opacity-70'}`}>
+    <div className={`${dayColor.cardBg} rounded-xl p-6 shadow-lg border-2 ${dayColor.border} hover:shadow-xl transition-all h-48 flex flex-col justify-between`}>
+      {/* Time and Category */}
+      <div className="flex items-center justify-between mb-3">
+        <div className={`${dayColor.timeBg} ${dayColor.timeText} px-4 py-2 rounded-lg font-bold text-lg`}>
+          {item.time}
         </div>
-        <p className="text-gray-700 leading-relaxed">{desc}</p>
+        <div className={`w-10 h-10 ${dayColor.bg} rounded-full flex items-center justify-center shadow-md`}>
+          {getTimeIcon(item.time)}
+        </div>
+      </div>
+      
+      {/* Activity Category */}
+      {getActivityCategory(item.desc) && (
+        <div className={`px-3 py-1 ${dayColor.categoryBg} ${dayColor.categoryText} rounded-full text-sm font-medium inline-block mb-3 w-fit`}>
+          {getActivityCategory(item.desc)}
+        </div>
+      )}
+      
+      {/* Description */}
+      <div className="flex-1 flex items-center">
+        <p className="text-gray-700 leading-relaxed text-base">{item.desc}</p>
       </div>
     </div>
   </div>
 )
+
+const HorizontalTimeline = ({ items, dayColor, currentIndex, onIndexChange }) => {
+  const canGoLeft = currentIndex > 0
+  const canGoRight = currentIndex < items.length - 1
+  
+  return (
+    <div className="relative">
+      {/* Navigation Arrows */}
+      <button
+        onClick={() => canGoLeft && onIndexChange(currentIndex - 1)}
+        className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all ${
+          canGoLeft 
+            ? `${dayColor.bg} text-white hover:shadow-xl hover:scale-110` 
+            : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+        }`}
+        disabled={!canGoLeft}
+      >
+        <ChevronLeft size={24} />
+      </button>
+      
+      <button
+        onClick={() => canGoRight && onIndexChange(currentIndex + 1)}
+        className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all ${
+          canGoRight 
+            ? `${dayColor.bg} text-white hover:shadow-xl hover:scale-110` 
+            : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+        }`}
+        disabled={!canGoRight}
+      >
+        <ChevronRight size={24} />
+      </button>
+
+      {/* Timeline Container */}
+      <div className="overflow-hidden mx-16">
+        <div 
+          className="flex transition-transform duration-300 ease-in-out"
+          style={{ transform: `translateX(-${currentIndex * 320}px)` }}
+        >
+          {items.map((item, idx) => (
+            <TimelineCard
+              key={idx}
+              item={item}
+              dayColor={dayColor}
+              isActive={idx === currentIndex}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Progress Indicators */}
+      <div className="flex justify-center mt-6 gap-2">
+        {items.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => onIndexChange(idx)}
+            className={`w-3 h-3 rounded-full transition-all ${
+              idx === currentIndex 
+                ? `${dayColor.bg} scale-125` 
+                : 'bg-gray-300 hover:bg-gray-400'
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Current Position Counter */}
+      <div className="text-center mt-4">
+        <span className={`text-sm font-medium ${dayColor.timeText} ${dayColor.timeBg} px-3 py-1 rounded-full`}>
+          {currentIndex + 1} dari {items.length}
+        </span>
+      </div>
+    </div>
+  )
+}
 
 const DayHeader = ({ day, title, subtitle, color, icon }) => (
   <div className={`${color.headerBg} rounded-xl p-6 mb-6 shadow-lg border-2 ${color.headerBorder}`}>
@@ -176,6 +246,10 @@ const FacilityCard = ({ facility, index }) => (
 )
 
 export default function EkowisataBalembangan() {
+  const [day1Index, setDay1Index] = useState(0)
+  const [day2Index, setDay2Index] = useState(0) 
+  const [day3Index, setDay3Index] = useState(0)
+  
   const jadwal = [
     { time: "08.00 – 14.00", desc: "Perjalanan dari Tanjung Redeb ke Pulau Balembangan" },
     { time: "14.00 – 16.00", desc: "Berenang, mancing, bebas, ISHOMA" },
@@ -270,7 +344,7 @@ export default function EkowisataBalembangan() {
     const day3 = jadwal.slice(15)
 
     return (
-      <div className="space-y-8">
+      <div className="space-y-12">
         {/* Day 1 */}
         <div>
           <DayHeader 
@@ -280,18 +354,13 @@ export default function EkowisataBalembangan() {
             color={dayColors.day1}
             icon={<MapPin className="w-8 h-8 text-white" />}
           />
-          <div className="ml-4">
-            {day1.map((item, idx) => (
-              <TimelineItem
-                key={idx}
-                time={item.time}
-                desc={item.desc}
-                isLast={idx === day1.length - 1}
-                dayColor={dayColors.day1}
-                timeIcon={getTimeIcon(item.time)}
-                category={getActivityCategory(item.desc)}
-              />
-            ))}
+          <div className="mt-8">
+            <HorizontalTimeline
+              items={day1}
+              dayColor={dayColors.day1}
+              currentIndex={day1Index}
+              onIndexChange={setDay1Index}
+            />
           </div>
         </div>
 
@@ -304,18 +373,13 @@ export default function EkowisataBalembangan() {
             color={dayColors.day2}
             icon={<Waves className="w-8 h-8 text-white" />}
           />
-          <div className="ml-4">
-            {day2.map((item, idx) => (
-              <TimelineItem
-                key={idx + 6}
-                time={item.time}
-                desc={item.desc}
-                isLast={idx === day2.length - 1}
-                dayColor={dayColors.day2}
-                timeIcon={getTimeIcon(item.time)}
-                category={getActivityCategory(item.desc)}
-              />
-            ))}
+          <div className="mt-8">
+            <HorizontalTimeline
+              items={day2}
+              dayColor={dayColors.day2}
+              currentIndex={day2Index}
+              onIndexChange={setDay2Index}
+            />
           </div>
         </div>
 
@@ -328,18 +392,13 @@ export default function EkowisataBalembangan() {
             color={dayColors.day3}
             icon={<Sun className="w-8 h-8 text-white" />}
           />
-          <div className="ml-4">
-            {day3.map((item, idx) => (
-              <TimelineItem
-                key={idx + 15}
-                time={item.time}
-                desc={item.desc}
-                isLast={idx === day3.length - 1}
-                dayColor={dayColors.day3}
-                timeIcon={getTimeIcon(item.time)}
-                category={getActivityCategory(item.desc)}
-              />
-            ))}
+          <div className="mt-8">
+            <HorizontalTimeline
+              items={day3}
+              dayColor={dayColors.day3}
+              currentIndex={day3Index}
+              onIndexChange={setDay3Index}
+            />
           </div>
         </div>
       </div>

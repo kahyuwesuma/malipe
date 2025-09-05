@@ -1,93 +1,101 @@
 "use client";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { useAutoTranslate } from "../translate/useAutoTranslate";
 
 const stats = [
   {
     value: 8414,
-    suffix: " Kali",
-    title: "Penyu Betina Bertelur",
+    label: "Penyu Betina Bertelur",
     desc: "Malipé membantu para penyu betina bertelur agar populasi mereka terus bertambah",
   },
   {
     value: 513230,
-    suffix: "",
-    title: "Melepas Tukik",
+    label: "Melepas Tukik",
     desc: "Malipé telah melepaskan tukik ke habitatnya agar mereka bisa berkembang biak secara alami",
   },
   {
     value: 2392,
-    suffix: "",
-    title: "Mengedukasi Peserta",
+    label: "Mengedukasi Peserta",
     desc: "Malipé telah memberikan edukasi penyu kepada para peserta",
   },
 ];
 
-// Komponen CountUp sederhana (JSX versi)
-const CountUp = ({ end, duration = 2, suffix = "" }) => {
+const Counter = ({ target }) => {
   const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+  const ref = useRef(null);
 
   useEffect(() => {
-    let start = 0;
-    const stepTime = Math.abs(Math.floor((duration * 1000) / end));
-    const timer = setInterval(() => {
-      start += Math.ceil(end / (duration * 60));
-      if (start >= end) {
-        start = end;
-        clearInterval(timer);
-      }
-      setCount(start);
-    }, stepTime);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !started) {
+          setStarted(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    if (ref.current) observer.observe(ref.current);
 
-    return () => clearInterval(timer);
-  }, [end, duration]);
+    return () => {
+      if (ref.current) observer.unobserve(ref.current);
+    };
+  }, [started]);
+
+  useEffect(() => {
+    if (!started) return;
+
+    let startTime;
+    const duration = 2000; // durasi animasi 2 detik
+
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const current = Math.floor(progress * target);
+      setCount(current);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [started, target]);
 
   return (
-    <span>
+    <span ref={ref} className="text-3xl sm:text-4xl font-bold text-blue-600">
       {count.toLocaleString()}
-      {suffix}
     </span>
   );
 };
 
+
 const Navigation = () => {
   return (
-    <section className="px-6 sm:px-10 lg:px-20 py-16 bg-gradient-to-b from-white to-blue-50">
-      <div className="max-w-6xl mx-auto text-center">
+    <section className="py-16 bg-gradient-to-b from-white to-blue-50">
+      <div className="max-w-6xl mx-auto px-6 lg:px-12 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-14"
+          className="text-3xl lg:text-4xl font-bold mb-12"
         >
-          {useAutoTranslate("Hingga Saat Ini")}
+          Hingga Saat Ini
         </motion.h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {stats.map((item, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: idx * 0.2 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: idx * 0.2 }}
               viewport={{ once: true }}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0px 10px 25px rgba(0, 102, 255, 0.15)",
-              }}
-              className="p-8 bg-white rounded-2xl shadow-md border border-zinc-100 flex flex-col items-center text-center transition-all"
+              className="p-6 bg-white shadow-md rounded-2xl hover:shadow-xl transition-shadow duration-300"
             >
-              <span className="text-4xl sm:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-blue-500 to-sky-400 bg-clip-text text-transparent">
-                <CountUp end={item.value} suffix={item.suffix} />
-              </span>
-              <h3 className="text-lg sm:text-xl font-semibold mt-4 text-zinc-800">
-                {useAutoTranslate(item.title)}
-              </h3>
-              <p className="text-sm sm:text-base text-zinc-600 mt-3">
-                {useAutoTranslate(item.desc)}
-              </p>
+              <Counter target={item.value} />
+              <h3 className="mt-2 text-lg font-semibold">{item.label}</h3>
+              <p className="mt-2 text-sm text-gray-600">{item.desc}</p>
             </motion.div>
           ))}
         </div>

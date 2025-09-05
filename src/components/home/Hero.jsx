@@ -5,6 +5,7 @@ import hero2 from "@/asset/home/hero2.webp";
 import hero3 from "@/asset/home/hero2.jpg";
 import Autoplay from "embla-carousel-autoplay";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 import {
   Carousel,
@@ -19,20 +20,26 @@ const Hero = () => {
   const slide = [
     {
       image: hero1,
-      caption: "© IPB | 2024",
+      title: "Menjaga Pulau Balembangan",
+      subtitle: "Konservasi berbasis masyarakat untuk keberlanjutan ekosistem laut",
+      caption: "© MALIPE | 2025",
     },
     {
       image: hero2,
-      caption: "© IPB | 2024",
+      title: "Ekowisata untuk Semua",
+      subtitle: "Mengenal alam sambil mendukung kesejahteraan lokal",
+      caption: "© MALIPE | 2025",
     },
     {
       image: hero3,
-      caption: "© YLBKD | 2025",
+      title: "Bersama Kita Bisa",
+      subtitle: "Ayo bergabung melestarikan laut dan pesisir",
+      caption: "© MALIPE | 2025",
     },
   ];
 
   return (
-    <div className="">
+    <div className="relative">
       <Carousel
         plugins={[
           Autoplay({
@@ -40,43 +47,68 @@ const Hero = () => {
           }),
         ]}
       >
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          viewport={{ once: true }}
-          className="space-y-6"
-        >
-          <CarouselContent className="lg:h-[88.4vh] h-[50vh] flex">
-            {slide.map((item, index) => (
-              <CarouselItem
-                key={index}
-                className="relative flex items-center h-full"
+        <CarouselContent className="lg:h-[88vh] h-[60vh] flex">
+          {slide.map((item, index) => (
+            <CarouselItem
+              key={index}
+              className="relative flex items-center h-full"
+            >
+              <Image
+                src={item.image}
+                alt={`slide-${index}`}
+                width={1600}
+                height={800}
+                className="w-full h-full object-cover"
+                priority={index === 0}
+              />
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-black/40"></div>
+
+              {/* Text content */}
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="absolute text-white z-10 px-6 lg:px-28"
               >
-                <Image
-                  src={item.image}
-                  alt={`slide-${index}`}
-                  width={1500}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute text-white z-10">
-                  <div className="mx-6 lg:mx-28 mt-6 lg:mt-10 w-[80vw] lg:w-[50vw] flex flex-col items-start lg:gap-8 gap-2">
-                    <p className="text-xl lg:text-5xl whitespace-pre-line font-AktivGrotesk-Bold">
-                      {useAutoTranslate(item.title)}
-                    </p>
+                <div className="max-w-2xl flex flex-col gap-4">
+                  <h1 className="text-2xl lg:text-5xl font-bold drop-shadow-lg">
+                    {useAutoTranslate(item.title)}
+                  </h1>
+                  <p className="text-sm lg:text-lg font-light drop-shadow-md">
+                    {useAutoTranslate(item.subtitle)}
+                  </p>
+                  <div className="flex gap-4 mt-4">
+                    <Link
+                      href="/ekowisata"
+                      className="bg-blue-ylbkd hover:bg-white text-white hover:text-blue-ylbkd border border-blue-ylbkd px-4 py-2 lg:px-6 lg:py-3 rounded-lg font-medium transition-colors duration-300"
+                    >
+                      {useAutoTranslate("Jelajahi Ekowisata")}
+                    </Link>
+                    <Link
+                      href="https://paypal.me/Malipe2021"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-white hover:bg-blue-ylbkd text-blue-ylbkd hover:text-white border border-blue-ylbkd px-4 py-2 lg:px-6 lg:py-3 rounded-lg font-medium transition-colors duration-300"
+                    >
+                      {useAutoTranslate("Donasi Sekarang")}
+                    </Link>
                   </div>
                 </div>
-                <p className="text-muted absolute font-WhitneyLight text-xxs lg:text-xs mx-6 lg:mx-28 mt-6 lg:mt-10 w-[80vw] lg:w-[50vw] flex flex-col items-start lg:gap-8 gap-2 bottom-5">
-                  {useAutoTranslate(item.caption)}
-                </p>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </motion.div>
-        <CarouselPrevious className="cursor-pointer left-2 lg:left-10 opacity-75 scale-60 lg:scale-100 " />
-        <CarouselNext className="cursor-pointer right-2 lg:right-10 opacity-75 scale-60 lg:scale-100 " />
+              </motion.div>
+
+              {/* Caption */}
+              <p className="absolute bottom-4 left-6 lg:left-28 text-xs lg:text-sm text-gray-200 font-light z-10">
+                {useAutoTranslate(item.caption)}
+              </p>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="cursor-pointer left-2 lg:left-10 opacity-75 scale-75 lg:scale-100" />
+        <CarouselNext className="cursor-pointer right-2 lg:right-10 opacity-75 scale-75 lg:scale-100" />
       </Carousel>
     </div>
   );
 };
+
 export default Hero;
