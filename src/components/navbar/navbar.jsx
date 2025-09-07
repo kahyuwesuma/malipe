@@ -32,7 +32,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="sticky flex flex-col justify-between px-4 sm:px-0 items-center top-0 z-50 py-5 sm:pt-0 bg-white overflow-hidden">
+    <nav className="sticky flex flex-col justify-between px-4 sm:px-0 items-center top-0 z-50 pb-2 lg:pb-4 sm:pt-0 bg-white overflow-hidden">
       <div className="w-full hidden sm:flex justify-end pt-2 sm:px-6 lg:px-14">
         <LanguageSwitcher/>
       </div>
@@ -42,8 +42,8 @@ const Navbar = () => {
             <Link href="/" className="">
               <Image
                 src={logo_ylbkd}
-                width={180}
-                className="sm:pr-2 w-[30vw] sm:w-auto"
+                width={130}
+                className="sm:pr-2 sm:mt-4 mt-3 w-[30vw] sm:w-auto"
                 alt="logo ylkbd"
                 priority
               />
