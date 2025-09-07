@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import logo_ylbkd from "@/asset/home/logo-300x124.webp";
-import { MapPin, Mail, Globe } from "lucide-react";
 import { useAutoTranslate } from "../translate/useAutoTranslate";
+import { EnvelopeSimpleIcon, FacebookLogoIcon, InstagramLogoIcon, MapPinIcon, WhatsappLogoIcon, YoutubeLogoIcon } from "@phosphor-icons/react/dist/ssr";
 
 const Footer = () => {
   const navLinks = [
@@ -22,8 +22,32 @@ const Footer = () => {
     {
       label: "Malipemaratuapedulipenyu@gmail.com",
       href: "mailto:Malipemaratuapedulipenyu@gmail.com",
-      icon: Mail,
+      icon: EnvelopeSimpleIcon,
       type: "email",
+    },
+    {
+      label: "Malipe",
+      href: "https://wa.me/6282213324114?text=Hallo...",
+      icon: WhatsappLogoIcon,
+      type: "website",
+    },
+    {
+      label: "Maratua Peduli Penyu",
+      href: "https://www.facebook.com/maratuapedulipenyu",
+      icon: FacebookLogoIcon,
+      type: "website",
+    },
+    {
+      label: "@maratuapedulipenyu",
+      href: "https://www.instagram.com/maratuapedulipenyu",
+      icon: InstagramLogoIcon,
+      type: "website",
+    },
+    {
+      label: "MALIPE (Maratua Peduli Penyu)",
+      href: "https://www.youtube.com/@malipemaratuapedulipenyu791",
+      icon: YoutubeLogoIcon,
+      type: "website",
     },
   ];
 
@@ -101,7 +125,7 @@ const Footer = () => {
                     </h3>
                     <div className="flex items-start gap-3 text-gray-600">
                       <div className="w-10 h-10 bg-white/60 backdrop-blur-sm rounded-xl flex items-center justify-center border border-blue-100">
-                        <MapPin className="w-4 h-4" />
+                        <MapPinIcon className="w-5 h-5" />
                       </div>
                       <address className="not-italic leading-relaxed lg:pt-2 flex-1 font-AktivGrotesk-Regular">
                         AKB. Sanipah 1 Gang. 3 No. 30 RT. 19
@@ -159,12 +183,12 @@ const Footer = () => {
                           className="flex items-start flex-row-reverse lg:flex-row gap-3 text-gray-600 hover:text-blue-600 transition-colors duration-200 group font-AktivGrotesk-Regular"
                         >
                           <div className="flex-1 pt-2">
-                            <span className="break-words leading-relaxed">
+                            <span className="break-words flex lg:justify-end leading-relaxed">
                               {contact.label}
                             </span>
                           </div>
                           <div className="w-10 h-10 bg-white/60 backdrop-blur-sm rounded-xl flex items-center justify-center border border-blue-100 group-hover:border-blue-200 group-hover:bg-blue-50/60 transition-all duration-200">
-                            <IconComponent className="w-4 h-4" />
+                            <IconComponent className="w-5 h-5" />
                           </div>
                         </a>
                       );
