@@ -23,7 +23,7 @@ import LanguageSwitcher from "./LanguageSwitcher";
 const Navbar = () => {
   const menuItems = [
     { href: "/", label: "Beranda" },
-    { href: "/tentang-kami", label: "Tentang Kami" },
+    // { href: "/tentang-kami", label: "Tentang Kami" },
     { href: "/berita", label: "Berita" },
     { href: "/ekowisata", label: "Ekowisata" },
     { href: "/galeri", label: "Galeri" },

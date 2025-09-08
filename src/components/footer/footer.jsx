@@ -10,7 +10,7 @@ import { EnvelopeSimpleIcon, FacebookLogoIcon, InstagramLogoIcon, MapPinIcon, Wh
 const Footer = () => {
   const navLinks = [
     { label: useAutoTranslate("Beranda"), href: "/" },
-    { label: useAutoTranslate("Tentang Kami"), href: "/tentang-kami" },
+    // { label: useAutoTranslate("Tentang Kami"), href: "/tentang-kami" },
     { label: useAutoTranslate("Berita"), href: "/berita" },
     { label: useAutoTranslate("Ekowisata"), href: "/ekowisata" },
     { label: useAutoTranslate("Galeri"), href: "/galeri" },
