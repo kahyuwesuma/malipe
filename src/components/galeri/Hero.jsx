@@ -33,7 +33,7 @@ const Hero = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-5xl font-AktivGrotesk-Bold mb-4"
           >
-            {useAutoTranslate("Mitra Kami")}
+            {useAutoTranslate("Dokumentasi Kegiatan MALIPE")}
           </motion.h1>
 
           <motion.h2
@@ -42,7 +42,7 @@ const Hero = () => {
             transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
             className="text-2xl font-AktivGrotesk-Medium"
           >
-            {useAutoTranslate("Yayasan Laut Biru Kepulauan Derawan (YLBKD)")}
+            {useAutoTranslate("Maratua Peduli Penyu")}
           </motion.h2>
 
           <motion.button

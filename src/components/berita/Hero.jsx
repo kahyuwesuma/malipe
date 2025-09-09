@@ -59,7 +59,7 @@ const Hero = () => {
             transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
             className="text-lg md:text-2xl font-AktivGrotesk-Medium"
           >
-            {useAutoTranslate("Temukan Acara Mendatang Kami")}
+            {useAutoTranslate("Kenali Kegiatan Kami")}
           </motion.h2>
 
           <motion.button

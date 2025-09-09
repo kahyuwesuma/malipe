@@ -1,10 +1,9 @@
-import EcoTourism from "@/components/ekowisata/EcoTourism"
-import Hero from "@/components/kemitraan/Hero"
+import EcoTourism from "@/components/ekowisata/EcoTourism"  
 
 const Page = () => {
   return(
     <>
-      <Hero/>
+      {/* <Hero/> */}
       <EcoTourism/>
     </>
   )

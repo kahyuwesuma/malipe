@@ -15,7 +15,7 @@ const Footer = () => {
     { label: useAutoTranslate("Ekowisata"), href: "/ekowisata" },
     { label: useAutoTranslate("Galeri"), href: "/galeri" },
     { label: useAutoTranslate("Publikasi"), href: "/publikasi" },
-    { label: useAutoTranslate("Kontak Kami"), href: "/kontak-kami" },
+    // { label: useAutoTranslate("Kontak Kami"), href: "/kontak-kami" },
   ];
 
   const contactInfo = [

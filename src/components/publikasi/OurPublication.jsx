@@ -7,19 +7,12 @@ import { AspectRatio } from "../ui/aspect-ratio";
 import { motion } from "framer-motion";
 import { Calendar, Clock, User, ArrowRight, BookOpen } from "lucide-react";
 import { supabase } from "@/utils/supabaseClient";
-import { useAutoTranslate } from "../translate/useAutoTranslate";
-import { useTranslation } from "../translate/TranslationContext";
 
 const OurPublication = () => {
   const [publications, setPublications] = useState([]);
   const [translated, setTranslated] = useState([]);
   const { translateText } = useTranslation();
 
-  const bacaSelengkapnya = useAutoTranslate("Baca Selengkapnya");
-  const translatedTitle = useAutoTranslate("Publikasi Kami");
-  const translatedDesc = useAutoTranslate("Temukan laporan, studi, dan panduan terbaru dari upaya konservasi laut dan pemberdayaan masyarakat pesisir");
-  const translatedNote = useAutoTranslate("Dalam upaya menjaga keberlanjutan ekosistem pesisir dan laut di wilayah Kepulauan Derawan dan sekitarnya, berbagai langkah strategis telah diambil melalui program-program konservasi yang terfokus dan kolaboratif.");
-  const translatedMinute = useAutoTranslate("Menit");
 
   const getCategoryColor = (category) => {
     const colors = {
