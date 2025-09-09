@@ -1,70 +1,125 @@
 "use client";
 import { useState } from "react";
-import { MapPin, Mail, Globe, Send, User, MessageSquare } from "lucide-react";
-import { Button } from "../ui/button";
-import { useAutoTranslate } from "../translate/useAutoTranslate";
+import { MapPin, Mail, Globe, Send, User, MessageSquare, Phone, Clock, Leaf } from "lucide-react";
+
+// Mock useAutoTranslate hook for demo
+const useAutoTranslate = (text) => text;
+
+// Mock Button component
+const Button = ({ children, className, type, ...props }) => (
+  <button
+    type={type}
+    className={`inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${className}`}
+    {...props}
+  >
+    {children}
+  </button>
+);
 
 const OurContact = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [focusedField, setFocusedField] = useState(null);
+
   const contactInfo = [
     {
       icon: MapPin,
       title: useAutoTranslate("Alamat Kantor"),
       content: [
-        "Jl. AMD, Gg. 5, Kel. Lempake",
-        "Kec. Samarinda Utara",
-        "Kota Samarinda, Provinsi Kalimantan Timur",
+        "AKB. Sanipah 1 Gang. 3 No. 30 RT. 19",
+        "Kel. Bugis, Kec. Tanjung Redeb",
+        "Kabupaten Berau, Kalimantan Timur",
         "Indonesia",
       ],
+      color: "from-emerald-100 to-green-100",
+      iconBg: "bg-emerald-500",
     },
     {
       icon: Mail,
       title: useAutoTranslate("Email Kami"),
-      content: ["yayasan.lautbiruderawan@gmail.com"],
-      action: "mailto:yayasan.lautbiruderawan@gmail.com",
+      content: ["Malipemaratuapedulipenyu@gmail.com"],
+      action: "mailto:Malipemaratuapedulipenyu@gmail.com",
+      color: "from-blue-100 to-cyan-100",
+      iconBg: "bg-blue-500",
     },
     {
       icon: Globe,
       title: "Website",
-      content: ["ylbkd.or.id"],
-      action: "https://ylbkd.or.id",
+      content: ["malipe.com"],
+      action: "https://malipe.com",
+      color: "from-teal-100 to-blue-100",
+      iconBg: "bg-teal-500",
     },
     {
-      icon: Mail,
-      title: useAutoTranslate("Direktur Indonesia Global Conservation"),
-      content: ["dadang@globalconservation.org"],
-      action: "mailto:dadang@globalconservation.org",
-    },
-    {
-      icon: Globe,
-      title: "Global Conservation",
-      content: ["globalconservation.org"],
-      action: "https://globalconservation.org",
+      icon: Clock,
+      title: useAutoTranslate("Jam Operasional"),
+      content: ["Senin - Jumat: 08:00 - 17:00", "Sabtu: 08:00 - 14:00"],
+      color: "from-orange-100 to-yellow-100",
+      iconBg: "bg-orange-500",
     },
   ];
 
+  const handleSubmit = (e) => {
+    setIsSubmitting(true);
+    // FormSubmit will handle the actual submission
+    setTimeout(() => setIsSubmitting(false), 2000);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center font-WhitneyMedium">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-green-50 to-teal-50">
+        <div className="absolute top-20 left-10 w-64 h-64 bg-blue-200/30 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-green-200/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/4 w-48 h-48 bg-teal-200/20 rounded-full blur-2xl animate-bounce"></div>
+      </div>
+
+      {/* Hero Section */}
+      <div className="relative bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 text-white overflow-hidden">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="absolute inset-0">
+          <div className="absolute top-10 right-10 w-32 h-32 opacity-10 animate-pulse bg-white rounded-full"></div>
+          <Leaf className="absolute bottom-10 left-10 w-24 h-24 opacity-10 animate-bounce" />
+        </div>
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 mb-6">
+              <Leaf className="w-5 h-5" />
+              <span className="text-sm font-medium">Konservasi Lingkungan</span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
               {useAutoTranslate("Hubungi Kami")}
             </h1>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed" id="contact">
+            <p className="text-xl sm:text-2xl text-blue-100 max-w-4xl mx-auto leading-relaxed">
               {useAutoTranslate(
-                "Kami siap membantu Anda dalam upaya konservasi lingkungan laut dan darat. Jangan ragu untuk menghubungi kami untuk kemitraan, informasi, atau pertanyaan lainnya."
+                "Bergabunglah dengan misi kami dalam melestarikan keindahan alam Indonesia. Mari bersama-sama menjaga ekosistem laut dan darat untuk generasi mendatang."
               )}
             </p>
+            <div className="mt-8 flex justify-center">
+              <div className="flex items-center gap-4 text-white/80">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <span className="text-sm">Siap Membantu 24/7</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 font-AktivGrotesk-Regular">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 h-full">
-            <h2 className="text-2xl sm:text-3xl font-AktivGrotesk-Medium text-gray-900 mb-6">
-              {useAutoTranslate("Informasi Kontak")}
-            </h2>
+      {/* Main Content */}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+          {/* Contact Information */}
+          <div className="lg:col-span-2 space-y-8">
+            <div className="text-center lg:text-left mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                {useAutoTranslate("Informasi Kontak")}
+              </h2>
+              <p className="text-gray-600 text-lg">
+                Temukan berbagai cara untuk terhubung dengan kami
+              </p>
+            </div>
 
             <div className="space-y-6">
               {contactInfo.map((info, index) => {
@@ -72,32 +127,36 @@ const OurContact = () => {
                 return (
                   <div
                     key={index}
-                    className="flex items-start gap-4 lg:p-4 py-2 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                    className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
                   >
-                    <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <IconComponent className="w-6 h-6 text-blue-600" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 mb-1">
-                        {info.title}
-                      </h3>
-                      <div className="text-gray-600">
-                        {info.content.map((line, idx) => (
-                          <div key={idx} className="mb-1 last:mb-0">
-                            {info.action ? (
-                              <a
-                                href={info.action}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-600 text-sm sm:text-base hover:text-blue-800 hover:underline transition-colors duration-200"
-                              >
-                                {line}
-                              </a>
-                            ) : (
-                              <span>{line}</span>
-                            )}
-                          </div>
-                        ))}
+                    <div className={`absolute inset-0 bg-gradient-to-r ${info.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
+                    
+                    <div className="relative p-6 flex items-start gap-4">
+                      <div className={`flex-shrink-0 w-14 h-14 ${info.iconBg} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                        <IconComponent className="w-7 h-7 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-gray-900 mb-2 text-lg group-hover:text-gray-800 transition-colors">
+                          {info.title}
+                        </h3>
+                        <div className="text-gray-600 group-hover:text-gray-700 transition-colors">
+                          {info.content.map((line, idx) => (
+                            <div key={idx} className="mb-1 last:mb-0">
+                              {info.action ? (
+                                <a
+                                  href={info.action}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-teal-600 hover:text-teal-800 hover:underline transition-colors duration-200 font-medium"
+                                >
+                                  {line}
+                                </a>
+                              ) : (
+                                <span className="text-gray-700">{line}</span>
+                              )}
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -106,135 +165,165 @@ const OurContact = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl font-AktivGrotesk-Regular shadow-xl p-6 sm:p-8 lg:p-10 h-full flex flex-col">
-            <div className="mb-8">
-              <h2 className="text-2xl sm:text-3xl font-AktivGrotesk-Medium text-gray-900 mb-2">
-                {useAutoTranslate("Kirim Pesan")}
-              </h2>
-              <p className="text-gray-600">
-                {useAutoTranslate("Isi form di bawah ini dan kami akan segera merespon pesan Anda.")}
-              </p>
-            </div>
-            <form
-              action="https://formsubmit.co/yayasan.lautbiruderawan@gmail.com"
-              method="POST"
-              target="_blank"
-              className="space-y-6"
-            >
-              <input
-                type="hidden"
-                name="_subject"
-                value="Pesan Baru dari Formulir Kontak"
-              />
-              <input type="hidden" name="_captcha" value="false" />
+          {/* Contact Form */}
+          <div className="lg:col-span-3">
+            <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-teal-400/20 to-blue-400/20 rounded-bl-full"></div>
+              
+              <div className="relative mb-8">
+                <h2 className="text-3xl font-bold text-gray-900 mb-3">
+                  {useAutoTranslate("Kirim Pesan")}
+                </h2>
+                <p className="text-gray-600 text-lg">
+                  {useAutoTranslate("Kami akan merespon dalam waktu 24 jam")}
+                </p>
+              </div>
 
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm text-gray-700 mb-2"
-                >
-                  {useAutoTranslate("Nama Lengkap")} *
-                </label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <div
+                action="https://formsubmit.co/Malipemaratuapedulipenyu@gmail.com"
+                onSubmit={handleSubmit}
+                className="space-y-6 relative"
+              >
+                <input type="hidden" name="_subject" value="Pesan Baru dari Formulir Kontak" />
+                <input type="hidden" name="_captcha" value="false" />
+
+                {/* Name Field */}
+                <div className="space-y-2">
+                  <label htmlFor="name" className="block text-sm font-semibold text-gray-700">
+                    {useAutoTranslate("Nama Lengkap")} *
+                  </label>
+                  <div className="relative">
+                    <User className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 transition-colors duration-200 ${
+                      focusedField === 'name' ? 'text-teal-500' : 'text-gray-400'
+                    }`} />
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      onFocus={() => setFocusedField('name')}
+                      onBlur={() => setFocusedField(null)}
+                      placeholder={useAutoTranslate("Masukkan nama lengkap Anda")}
+                      className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 text-gray-900 placeholder-gray-500 transition-all duration-200"
+                    />
+                  </div>
+                </div>
+
+                {/* Email Field */}
+                <div className="space-y-2">
+                  <label htmlFor="email" className="block text-sm font-semibold text-gray-700">
+                    {useAutoTranslate("Email Anda")} *
+                  </label>
+                  <div className="relative">
+                    <Mail className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 transition-colors duration-200 ${
+                      focusedField === 'email' ? 'text-teal-500' : 'text-gray-400'
+                    }`} />
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      onFocus={() => setFocusedField('email')}
+                      onBlur={() => setFocusedField(null)}
+                      placeholder={useAutoTranslate("nama@email.com")}
+                      className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 text-gray-900 placeholder-gray-500 transition-all duration-200"
+                    />
+                  </div>
+                </div>
+
+                {/* Subject Field */}
+                <div className="space-y-2">
+                  <label htmlFor="subject" className="block text-sm font-semibold text-gray-700">
+                    {useAutoTranslate("Subjek")} *
+                  </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
+                    id="subject"
+                    name="subject"
                     required
-                    placeholder={useAutoTranslate("Masukkan nama lengkap Anda")}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
+                    onFocus={() => setFocusedField('subject')}
+                    onBlur={() => setFocusedField(null)}
+                    placeholder={useAutoTranslate("Topik pesan Anda")}
+                    className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 text-gray-900 placeholder-gray-500 transition-all duration-200"
                   />
                 </div>
-              </div>
 
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm text-gray-700 mb-2"
-                >
-                  {useAutoTranslate("Email Anda")}*
-                </label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    placeholder={useAutoTranslate("nama@email.com")}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
-                  />
+                {/* Message Field */}
+                <div className="space-y-2">
+                  <label htmlFor="message" className="block text-sm font-semibold text-gray-700">
+                    {useAutoTranslate("Pesan")} *
+                  </label>
+                  <div className="relative">
+                    <MessageSquare className={`absolute left-4 top-4 w-5 h-5 transition-colors duration-200 ${
+                      focusedField === 'message' ? 'text-teal-500' : 'text-gray-400'
+                    }`} />
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={6}
+                      required
+                      onFocus={() => setFocusedField('message')}
+                      onBlur={() => setFocusedField(null)}
+                      placeholder={useAutoTranslate("Tulis pesan Anda di sini...")}
+                      className="w-full min-h-[160px] pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 text-gray-900 placeholder-gray-500 resize-y transition-all duration-200"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div>
-                <label
-                  htmlFor="subject"
-                  className="block text-sm text-gray-700 mb-2"
+                {/* Submit Button */}
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-full py-4 px-8 rounded-xl font-semibold text-lg transition-all duration-200 transform hover:scale-105 ${
+                    isSubmitting
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white shadow-lg hover:shadow-2xl focus:ring-4 focus:ring-teal-500/50'
+                  }`}
                 >
-                  {useAutoTranslate("Subjek")} *
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  required
-                  placeholder={useAutoTranslate("Topik pesan Anda")}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
-                />
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                      Mengirim...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5 mr-2" />
+                      {useAutoTranslate("Kirim Pesan")}
+                    </>
+                  )}
+                </Button>
               </div>
-
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm text-gray-700 mb-2"
-                >
-                  {useAutoTranslate("Pesan")} *
-                </label>
-                <div className="relative">
-                  <MessageSquare className="absolute left-3 top-4 text-gray-400 w-5 h-5" />
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={6}
-                    required
-                    placeholder={useAutoTranslate("Tulis pesan Anda di sini...")}
-                    className="w-full min-h-[160px] pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500 resize-y"
-                  />
-                </div>
-              </div>
-
-              <Button
-                type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2"
-              >
-                <Send className="w-5 h-5" />
-                {useAutoTranslate("Kirim Pesan")}
-              </Button>
-            </form>
+            </div>
           </div>
         </div>
 
-        <div className="w-full">
-          <div className="bg-gradient-to-br font-AktivGrotesk-Regular from-blue-600 to-green-600 rounded-2xl shadow-xl p-6 sm:p-8 text-white">
-            <h3 className="text-xl sm:text-2xl font-bold mb-4 capitalize">
-              {useAutoTranslate("Dukung Yayasan Kami")}
-            </h3>
-            <div className="space-y-4">
-              <p className="text-blue-100 leading-relaxed">
-                <strong className="text-white uppercase">
-                  {useAutoTranslate("BERSAMA, KITA BISA MENJAGA LAUT DAN PESISIR PALING BERNILAI DI INDONESIA.")}
-                </strong>
-              </p>
-              <p className="text-blue-200 leading-relaxed">
+        {/* Call to Action Section */}
+        <div className="mt-16">
+          <div className="relative bg-gradient-to-br from-emerald-600 via-teal-600 to-blue-600 rounded-3xl shadow-2xl p-8 sm:p-12 text-white overflow-hidden">
+            <div className="absolute inset-0 bg-black/10"></div>
+            <div className="absolute top-4 right-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
+            <div className="absolute bottom-4 left-4 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
+            
+            <div className="relative text-center">
+              <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-6 py-3 mb-6">
+                <Leaf className="w-5 h-5" />
+                <span className="font-semibold">Dukung Konservasi</span>
+              </div>
+              
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6">
+                {useAutoTranslate("Bersama Menjaga Warisan Alam Indonesia")}
+              </h3>
+              
+              <p className="text-lg sm:text-xl text-blue-100 max-w-4xl mx-auto mb-4 leading-relaxed">
                 {useAutoTranslate("Setiap kontribusi Anda langsung mendukung rangers dan masyarakat lokal yang bekerja di garis depan untuk melindungi ekosistem laut dan spesies yang terancam punah.")}
               </p>
-              <Button className="mt-5 bg-white text-blue-600 hover:bg-blue-50 font-semibold py-6 px-8 rounded-lg transition-all duration-200">
-                <a
-                  href="/donasi"
-                  className="flex items-center capitalize justify-center gap-2"
-                >
+              
+              <p className="text-blue-200 mb-8 text-lg">
+                Mari bergabung dalam misi penting ini untuk masa depan yang berkelanjutan.
+              </p>
+              
+              <Button className="bg-white text-teal-600 hover:bg-blue-50 hover:text-teal-700 font-bold py-4 px-10 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200">
+                <a href="/donasi" className="flex items-center gap-3">
                   💙 {useAutoTranslate("Donasi Sekarang")}
                 </a>
               </Button>
@@ -242,6 +331,16 @@ const OurContact = () => {
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 };

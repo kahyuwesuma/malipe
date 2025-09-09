@@ -28,7 +28,7 @@ const Navbar = () => {
     { href: "/ekowisata", label: "Ekowisata" },
     { href: "/galeri", label: "Galeri" },
     { href: "/publikasi", label: "Publikasi" },
-    // { href: "/kontak-kami", label: "Kontak Kami" },
+    { href: "/kontak-kami", label: "Kontak Kami" },
   ];
 
   return (

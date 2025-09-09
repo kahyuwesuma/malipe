@@ -15,7 +15,7 @@ const Footer = () => {
     { label: useAutoTranslate("Ekowisata"), href: "/ekowisata" },
     { label: useAutoTranslate("Galeri"), href: "/galeri" },
     { label: useAutoTranslate("Publikasi"), href: "/publikasi" },
-    // { label: useAutoTranslate("Kontak Kami"), href: "/kontak-kami" },
+    { label: useAutoTranslate("Kontak Kami"), href: "/kontak-kami" },
   ];
 
   const contactInfo = [
@@ -153,7 +153,7 @@ const Footer = () => {
                   </p>
                   <Button className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-medium py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 font-AktivGrotesk-Regular">
                     <Link
-                      href="/donasi"
+                      href="https://paypal.me/Malipe202"
                       className="flex items-center justify-center gap-2"
                     >
                       {useAutoTranslate("Donasi Sekarang")}
