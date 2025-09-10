@@ -88,7 +88,7 @@ export default function AboutSection() {
         transition={{ duration: 0.8 }}
       >
         <h2 className="text-3xl font-bold text-gray-800 mb-12 text-center">
-          Nilai MALIPE
+          Terkait Organisasi
         </h2>
         <div className="space-y-8">
           {organizationPoints.map((point, index) => (
