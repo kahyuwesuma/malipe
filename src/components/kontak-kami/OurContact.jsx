@@ -9,7 +9,7 @@ const useAutoTranslate = (text) => text;
 const Button = ({ children, className, type, ...props }) => (
   <button
     type={type}
-    className={`inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${className}`}
+    className={`inline-flex items-center justify-center px-6 py-3 text-base font-AktivGrotesk-Regular rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${className}`}
     {...props}
   >
     {children}
@@ -67,7 +67,7 @@ const OurContact = () => {
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-green-50 to-teal-50">
+      <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-64 h-64 bg-blue-200/30 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-green-200/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
         <div className="absolute top-1/2 left-1/4 w-48 h-48 bg-teal-200/20 rounded-full blur-2xl animate-bounce"></div>
@@ -81,29 +81,12 @@ const OurContact = () => {
           <Leaf className="absolute bottom-10 left-10 w-24 h-24 opacity-10 animate-bounce" />
         </div>
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 mb-6">
-              <Leaf className="w-5 h-5" />
-              <span className="text-sm font-medium">Konservasi Lingkungan</span>
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
-              {useAutoTranslate("Hubungi Kami")}
-            </h1>
-            <p className="text-xl sm:text-2xl text-blue-100 max-w-4xl mx-auto leading-relaxed">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 text-center">
+            <p className="text-xl sm:text-2xl text-blue-100 max-w-4xl mx-auto leading-relaxed font-AktivGrotesk-Regular">
               {useAutoTranslate(
                 "Bergabunglah dengan misi kami dalam melestarikan keindahan alam Indonesia. Mari bersama-sama menjaga ekosistem laut dan darat untuk generasi mendatang."
               )}
             </p>
-            <div className="mt-8 flex justify-center">
-              <div className="flex items-center gap-4 text-white/80">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-sm">Siap Membantu 24/7</span>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -113,7 +96,7 @@ const OurContact = () => {
           {/* Contact Information */}
           <div className="lg:col-span-2 space-y-8">
             <div className="text-center lg:text-left mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl font-AktivGrotesk-Regular text-gray-900 mb-4">
                 {useAutoTranslate("Informasi Kontak")}
               </h2>
               <p className="text-gray-600 text-lg">
@@ -121,7 +104,7 @@ const OurContact = () => {
               </p>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-6 font-AktivGrotesk-Regular">
               {contactInfo.map((info, index) => {
                 const IconComponent = info.icon;
                 return (
@@ -136,7 +119,7 @@ const OurContact = () => {
                         <IconComponent className="w-7 h-7 text-white" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-bold text-gray-900 mb-2 text-lg group-hover:text-gray-800 transition-colors">
+                        <h3 className="font-AktivGrotesk-Regular text-gray-900 mb-2 text-lg group-hover:text-gray-800 transition-colors">
                           {info.title}
                         </h3>
                         <div className="text-gray-600 group-hover:text-gray-700 transition-colors">
@@ -147,7 +130,7 @@ const OurContact = () => {
                                   href={info.action}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="text-teal-600 hover:text-teal-800 hover:underline transition-colors duration-200 font-medium"
+                                  className="text-teal-600 hover:text-teal-800 hover:underline transition-colors duration-200 font-AktivGrotesk-Regular"
                                 >
                                   {line}
                                 </a>
@@ -171,10 +154,10 @@ const OurContact = () => {
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-teal-400/20 to-blue-400/20 rounded-bl-full"></div>
               
               <div className="relative mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-3">
+                <h2 className="text-3xl font-AktivGrotesk-Regular text-gray-900 mb-3">
                   {useAutoTranslate("Kirim Pesan")}
                 </h2>
-                <p className="text-gray-600 text-lg">
+                <p className="text-gray-600 text-lg font-AktivGrotesk-Regular">
                   {useAutoTranslate("Kami akan merespon dalam waktu 24 jam")}
                 </p>
               </div>
@@ -188,8 +171,8 @@ const OurContact = () => {
                 <input type="hidden" name="_captcha" value="false" />
 
                 {/* Name Field */}
-                <div className="space-y-2">
-                  <label htmlFor="name" className="block text-sm font-semibold text-gray-700">
+                <div className="space-y-2 font-AktivGrotesk-Regular">
+                  <label htmlFor="name" className="block text-sm  text-gray-700">
                     {useAutoTranslate("Nama Lengkap")} *
                   </label>
                   <div className="relative">
@@ -210,8 +193,8 @@ const OurContact = () => {
                 </div>
 
                 {/* Email Field */}
-                <div className="space-y-2">
-                  <label htmlFor="email" className="block text-sm font-semibold text-gray-700">
+                <div className="space-y-2 font-AktivGrotesk-Regular">
+                  <label htmlFor="email" className="block text-sm text-gray-700">
                     {useAutoTranslate("Email Anda")} *
                   </label>
                   <div className="relative">
@@ -232,8 +215,8 @@ const OurContact = () => {
                 </div>
 
                 {/* Subject Field */}
-                <div className="space-y-2">
-                  <label htmlFor="subject" className="block text-sm font-semibold text-gray-700">
+                <div className="space-y-2 font-AktivGrotesk-Regular">
+                  <label htmlFor="subject" className="block text-sm text-gray-700">
                     {useAutoTranslate("Subjek")} *
                   </label>
                   <input
@@ -249,8 +232,8 @@ const OurContact = () => {
                 </div>
 
                 {/* Message Field */}
-                <div className="space-y-2">
-                  <label htmlFor="message" className="block text-sm font-semibold text-gray-700">
+                <div className="space-y-2 font-AktivGrotesk-Regular">
+                  <label htmlFor="message" className="block text-sm text-gray-700">
                     {useAutoTranslate("Pesan")} *
                   </label>
                   <div className="relative">
@@ -274,10 +257,10 @@ const OurContact = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`w-full py-4 px-8 rounded-xl font-semibold text-lg transition-all duration-200 transform hover:scale-105 ${
+                  className={`w-full py-4 px-8 rounded-xl font-AktivGrotesk-Regular text-lg transition-all duration-200 transform hover:scale-105 ${
                     isSubmitting
                       ? 'bg-gray-400 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white shadow-lg hover:shadow-2xl focus:ring-4 focus:ring-teal-500/50'
+                      : 'bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-600 hover:to-teal-400 text-white shadow-lg hover:shadow-2xl focus:ring-4 focus:ring-teal-500/50'
                   }`}
                 >
                   {isSubmitting ? (
@@ -299,7 +282,7 @@ const OurContact = () => {
 
         {/* Call to Action Section */}
         <div className="mt-16">
-          <div className="relative bg-gradient-to-br from-emerald-600 via-teal-600 to-blue-600 rounded-3xl shadow-2xl p-8 sm:p-12 text-white overflow-hidden">
+          <div className="relative bg-gradient-to-br from-emerald-600 via-teal-600 to-teal-400 rounded-3xl shadow-2xl p-8 sm:p-12 text-white overflow-hidden">
             <div className="absolute inset-0 bg-black/10"></div>
             <div className="absolute top-4 right-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
             <div className="absolute bottom-4 left-4 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
@@ -307,24 +290,24 @@ const OurContact = () => {
             <div className="relative text-center">
               <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-6 py-3 mb-6">
                 <Leaf className="w-5 h-5" />
-                <span className="font-semibold">Dukung Konservasi</span>
+                <span className="font-AktivGrotesk-Regular">Dukung Konservasi</span>
               </div>
               
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-AktivGrotesk-Regular mb-6">
                 {useAutoTranslate("Bersama Menjaga Warisan Alam Indonesia")}
               </h3>
               
-              <p className="text-lg sm:text-xl text-blue-100 max-w-4xl mx-auto mb-4 leading-relaxed">
+              <p className="text-lg sm:text-xl text-blue-100 max-w-4xl mx-auto mb-4 leading-relaxed font-AktivGrotesk-Regular">
                 {useAutoTranslate("Setiap kontribusi Anda langsung mendukung rangers dan masyarakat lokal yang bekerja di garis depan untuk melindungi ekosistem laut dan spesies yang terancam punah.")}
               </p>
               
-              <p className="text-blue-200 mb-8 text-lg">
+              <p className="text-blue-200 mb-8 text-lg font-AktivGrotesk-Regular">
                 Mari bergabung dalam misi penting ini untuk masa depan yang berkelanjutan.
               </p>
               
-              <Button className="bg-white text-teal-600 hover:bg-blue-50 hover:text-teal-700 font-bold py-4 px-10 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200">
+              <Button className="bg-white text-teal-600 hover:bg-blue-50 hover:text-teal-700 font-AktivGrotesk-Regular py-4 px-10 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200">
                 <a href="/donasi" className="flex items-center gap-3">
-                  💙 {useAutoTranslate("Donasi Sekarang")}
+                  {useAutoTranslate("Donasi Sekarang")}
                 </a>
               </Button>
             </div>

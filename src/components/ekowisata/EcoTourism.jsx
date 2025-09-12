@@ -4,23 +4,23 @@ import { Clock, MapPin, Users, Camera, Waves, TreePine, Phone, ChevronDown, Chev
 
 const TimelineCard = ({ item, isActive, index }) => {
   return (
-    <div className={`flex-shrink-0 w-80 mx-4 transition-all duration-300 ${
-      isActive ? 'scale-105' : 'scale-95 opacity-60'
+    <div className={`flex-shrink-0 w-80 mx-4 transition-all duration-300 scale-80 ${
+      isActive ? 'scale-90' : 'scale-95 opacity-60'
     }`}>
       <div className="bg-white rounded-lg p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-200 h-48 flex flex-col justify-between">
         {/* Time and Number */}
         <div className="flex items-center justify-between mb-4">
-          <div className="bg-[#1B602F] text-white px-3 py-2 rounded-lg font-AktivGrotesk text-sm font-medium">
+          <div className="bg-[#1B602F] text-white px-3 py-2 rounded-lg font-AktivGrotesk-Regular text-sm">
             {item.time}
           </div>
-          <div className="w-8 h-8 bg-[#1B602F] rounded-full flex items-center justify-center text-white text-sm font-AktivGrotesk font-bold">
+          <div className="w-8 h-8 bg-[#1B602F] rounded-full flex items-center justify-center text-white text-sm font-AktivGrotesk-Regular">
             {index + 1}
           </div>
         </div>
         
         {/* Activity Category */}
         {getActivityCategory(item.desc) && (
-          <div className="bg-green-100 text-[#1B602F] px-3 py-1 rounded-full text-xs font-AktivGrotesk font-medium inline-block mb-4 w-fit">
+          <div className="bg-green-100 text-[#1B602F] px-3 py-1 rounded-full text-xs font-AktivGrotesk-Regular inline-block mb-4 w-fit">
             <div className="flex items-center gap-1">
               {getCategoryIcon(getActivityCategory(item.desc))}
               {getActivityCategory(item.desc)}
@@ -30,7 +30,7 @@ const TimelineCard = ({ item, isActive, index }) => {
         
         {/* Description */}
         <div className="flex-1 flex items-center">
-          <p className="text-gray-700 text-sm font-AktivGrotesk leading-relaxed">{item.desc}</p>
+          <p className="text-gray-700 text-sm font-AktivGrotesk-Regular leading-relaxed">{item.desc}</p>
         </div>
       </div>
     </div>
@@ -102,7 +102,7 @@ const HorizontalTimeline = ({ items, currentIndex, onIndexChange }) => {
 
       {/* Current Position Counter */}
       <div className="text-center mt-4">
-        <div className="inline-flex items-center gap-2 text-sm font-AktivGrotesk font-medium text-[#1B602F] bg-green-50 px-3 py-2 rounded-full">
+        <div className="inline-flex items-center gap-2 text-sm font-AktivGrotesk-Regular text-[#1B602F] bg-green-50 px-3 py-2 rounded-full">
           <Clock size={16} />
           <span>{currentIndex + 1} dari {items.length} kegiatan</span>
         </div>
@@ -119,9 +119,9 @@ const DayHeader = ({ day, title, subtitle, icon, stats }) => (
           {icon}
         </div>
         <div>
-          <div className="text-green-200 text-xs font-AktivGrotesk font-medium mb-1">{day}</div>
-          <h3 className="text-xl font-AktivGrotesk font-bold mb-1">{title}</h3>
-          <p className="text-green-100 text-sm font-AktivGrotesk">{subtitle}</p>
+          <div className="text-green-200 text-xs font-AktivGrotesk-Regular mb-1">{day}</div>
+          <h3 className="text-xl font-AktivGrotesk-Regular mb-1">{title}</h3>
+          <p className="text-green-100 text-sm font-AktivGrotesk-Regular">{subtitle}</p>
         </div>
       </div>
       
@@ -129,8 +129,8 @@ const DayHeader = ({ day, title, subtitle, icon, stats }) => (
       <div className="hidden md:flex gap-4">
         {stats.map((stat, idx) => (
           <div key={idx} className="bg-white/20 rounded-lg px-3 py-2 text-center">
-            <div className="text-lg font-AktivGrotesk font-bold">{stat.value}</div>
-            <div className="text-xs font-AktivGrotesk text-green-200">{stat.label}</div>
+            <div className="text-lg font-AktivGrotesk-Regular">{stat.value}</div>
+            <div className="text-xs font-AktivGrotesk-Regular text-green-200">{stat.label}</div>
           </div>
         ))}
       </div>
@@ -174,7 +174,7 @@ const Section = ({ title, children, icon, collapsible = false, defaultExpanded =
             <div className="w-10 h-10 bg-[#1B602F] rounded-lg flex items-center justify-center text-white">
               {icon}
             </div>
-            <h2 className="text-xl font-AktivGrotesk font-bold text-gray-800">{title}</h2>
+            <h2 className="text-xl font-AktivGrotesk-Regular text-gray-800">{title}</h2>
           </div>
           {collapsible && (
             <div className="text-gray-400">
@@ -197,10 +197,10 @@ const InfoCard = ({ icon, title, description, stats }) => (
     <div className="w-12 h-12 bg-[#1B602F] rounded-lg flex items-center justify-center text-white mx-auto mb-4">
       {icon}
     </div>
-    <h3 className="font-AktivGrotesk font-bold text-gray-800 text-lg mb-2">{title}</h3>
-    <p className="text-gray-600 text-sm font-AktivGrotesk mb-3">{description}</p>
+    <h3 className="font-AktivGrotesk-Regular text-gray-800 text-lg mb-2">{title}</h3>
+    <p className="text-gray-600 text-sm font-AktivGrotesk-Regular mb-3">{description}</p>
     {stats && (
-      <div className="inline-block px-3 py-1 bg-green-50 text-[#1B602F] rounded-full font-AktivGrotesk font-medium text-sm">
+      <div className="inline-block px-3 py-1 bg-green-50 text-[#1B602F] rounded-full font-AktivGrotesk-Regular text-sm">
         {stats}
       </div>
     )}
@@ -212,10 +212,10 @@ const StatsCard = ({ label, value, icon, description }) => (
     <div className="w-12 h-12 bg-[#1B602F] rounded-lg flex items-center justify-center text-white mx-auto mb-3">
       {icon}
     </div>
-    <div className="text-2xl font-AktivGrotesk font-bold text-[#1B602F] mb-1">{value}</div>
-    <div className="text-sm text-gray-600 font-AktivGrotesk font-medium mb-1">{label}</div>
+    <div className="text-2xl font-AktivGrotesk-Regular text-[#1B602F] mb-1">{value}</div>
+    <div className="text-sm text-gray-600 font-AktivGrotesk-Regular mb-1">{label}</div>
     {description && (
-      <div className="text-xs text-gray-500 font-AktivGrotesk">{description}</div>
+      <div className="text-xs text-gray-500 font-AktivGrotesk-Regular">{description}</div>
     )}
   </div>
 )
@@ -236,14 +236,14 @@ const RulesCard = ({ rule, index }) => (
         }
       </div>
       <div className="flex-1">
-        <div className={`px-2 py-1 rounded text-xs font-AktivGrotesk font-bold mb-2 inline-block ${
+        <div className={`px-2 py-1 rounded text-xs font-AktivGrotesk-Regular mb-2 inline-block ${
           rule.type === 'warning' 
             ? 'bg-red-200 text-red-800' 
             : 'bg-blue-200 text-blue-800'
         }`}>
           {rule.type === 'warning' ? 'LARANGAN' : 'WAJIB'} #{index + 1}
         </div>
-        <p className={`text-sm font-AktivGrotesk ${
+        <p className={`text-sm font-AktivGrotesk-Regular ${
           rule.type === 'warning' ? 'text-red-800' : 'text-blue-800'
         }`}>
           {rule.text}
@@ -261,16 +261,16 @@ const FacilityCard = ({ facility, index }) => (
           {facility.icon}
         </div>
         <div className="text-center">
-          <span className="text-xs font-AktivGrotesk font-bold text-[#1B602F] bg-green-100 px-2 py-1 rounded">
+          <span className="text-xs font-AktivGrotesk-Regular text-[#1B602F] bg-green-100 px-2 py-1 rounded">
             #{index + 1}
           </span>
         </div>
       </div>
       <div className="flex-1">
-        <p className="text-gray-700 text-sm font-AktivGrotesk mb-2">{facility.text}</p>
+        <p className="text-gray-700 text-sm font-AktivGrotesk-Regular mb-2">{facility.text}</p>
         <div className="flex items-center gap-2">
           <CheckCircle2 className="w-4 h-4 text-green-600" />
-          <span className="text-xs font-AktivGrotesk font-medium text-green-700 bg-green-100 px-2 py-1 rounded">
+          <span className="text-xs font-AktivGrotesk-Regular text-green-700 bg-green-100 px-2 py-1 rounded">
             Tersedia
           </span>
         </div>
@@ -396,86 +396,49 @@ export default function EkowisataBalembangan() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-        
+
         {/* Hero Header */}
         <div className="text-center mb-12">
           <div className="w-16 h-16 bg-[#1B602F] rounded-lg flex items-center justify-center mx-auto mb-6">
             <TreePine className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-4xl sm:text-5xl font-AktivGrotesk font-bold text-[#1B602F] mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-AktivGrotesk-Regular text-[#1B602F] mb-4">
             Pulau Balembangan
           </h1>
-          <p className="text-lg font-AktivGrotesk text-gray-600 max-w-3xl mx-auto mb-8">
+          <p className="text-base sm:text-lg font-AktivGrotesk-Regular text-gray-600 max-w-3xl mx-auto mb-8 px-2">
             Jelajahi pulau tak berpenghuni seluas 9,3 hektar dan saksikan habitat alami penyu hijau di Kalimantan Timur
           </p>
-          
+
           {/* Stats Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-            <StatsCard 
-              label="Luas Pulau"
-              value="9.3 Ha"
-              icon={<MapPin size={24} />}
-              description="Tak berpenghuni"
-            />
-            <StatsCard 
-              label="Durasi Trip"
-              value="3D2N"
-              icon={<Calendar size={24} />}
-              description="Pengalaman lengkap"
-            />
-            <StatsCard 
-              label="Total Aktivitas"
-              value="16+"
-              icon={<Waves size={24} />}
-              description="Kegiatan seru"
-            />
-            <StatsCard 
-              label="Fokus Konservasi"
-              value="100%"
-              icon={<Shield size={24} />}
-              description="Ramah lingkungan"
-            />
+            <StatsCard label="Luas Pulau" value="9.3 Ha" icon={<MapPin size={24} />} description="Tak berpenghuni" />
+            <StatsCard label="Durasi Trip" value="3D2N" icon={<Calendar size={24} />} description="Pengalaman lengkap" />
+            <StatsCard label="Total Aktivitas" value="16+" icon={<Waves size={24} />} description="Kegiatan seru" />
+            <StatsCard label="Fokus Konservasi" value="100%" icon={<Shield size={24} />} description="Ramah lingkungan" />
           </div>
-          
+
           {/* Info Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <InfoCard 
-              icon={<MapPin size={24} />}
-              title="Lokasi Eksotis"
-              description="Pulau tak berpenghuni dengan panorama alami yang menakjubkan dan pantai berpasir putih"
-              stats="9.3 Hektar"
-            />
-            <InfoCard 
-              icon={<Waves size={24} />}
-              title="Konservasi Penyu"
-              description="Habitat alami penyu hijau yang terlindungi dengan program pelestarian berkelanjutan"
-              stats="Penyu Hijau"
-            />
-            <InfoCard 
-              icon={<Users size={24} />}
-              title="Pengalaman Edukatif"
-              description="Belajar langsung tentang konservasi laut dan berpartisipasi dalam program pelestarian"
-              stats="Hands-On"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <InfoCard icon={<MapPin size={24} />} title="Lokasi Eksotis" description="Pulau tak berpenghuni dengan panorama alami yang menakjubkan dan pantai berpasir putih" stats="9.3 Hektar" />
+            <InfoCard icon={<Waves size={24} />} title="Konservasi Penyu" description="Habitat alami penyu hijau yang terlindungi dengan program pelestarian berkelanjutan" stats="Penyu Hijau" />
+            <InfoCard icon={<Users size={24} />} title="Pengalaman Edukatif" description="Belajar langsung tentang konservasi laut dan berpartisipasi dalam program pelestarian" stats="Hands-On" />
           </div>
         </div>
 
-        {/* Timeline Schedule */}
+        {/* Timeline */}
         <Section 
-          title="Timeline Kegiatan Ekowisata" 
+          title={<span className="font-AktivGrotesk-Regular">Jadwal Kegiatan</span>}
           icon={<Clock size={24} />}
           collapsible={true}
           defaultExpanded={true}
         >
           {renderTimeline()}
           <div className="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-lg">
-            <div className="flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 font-AktivGrotesk-Regular">
+              <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0" />
               <div>
-                <p className="font-AktivGrotesk font-bold text-amber-800 mb-2">
-                  Catatan Penting Timeline:
-                </p>
-                <p className="text-amber-700 text-sm font-AktivGrotesk">
+                <p className="text-amber-800 mb-2">Catatan Penting Timeline:</p>
+                <p className="text-amber-700 text-sm">
                   Timeline dapat berubah sesuai kondisi cuaca dan pasang surut air laut. 
                   Tim akan memberikan informasi terkini sebelum keberangkatan.
                 </p>
@@ -485,11 +448,11 @@ export default function EkowisataBalembangan() {
         </Section>
 
         {/* Tata Tertib */}
-        <Section title="Tata Tertib & Ketentuan" icon={<Shield size={24} />}>
-          <p className="text-gray-600 font-AktivGrotesk mb-6">
+        <Section title={<span className="font-AktivGrotesk-Regular">Tata Tertib & Ketentuan</span>} icon={<Shield size={24} />}>
+          <p className="text-gray-600 font-AktivGrotesk-Regular mb-6">
             Untuk menjaga kelestarian alam dan keamanan bersama, mohon patuhi ketentuan berikut:
           </p>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {tataTertib.map((rule, idx) => (
               <RulesCard key={idx} rule={rule} index={idx} />
             ))}
@@ -497,21 +460,21 @@ export default function EkowisataBalembangan() {
         </Section>
 
         {/* Fasilitas */}
-        <Section title="Fasilitas yang Disediakan" icon={<Camera size={24} />}>
-          <p className="text-gray-600 font-AktivGrotesk mb-6">
+        <Section title={<span className="font-AktivGrotesk-Regular">Fasilitas yang Disediakan</span>} icon={<Camera size={24} />}>
+          <p className="text-gray-600 font-AktivGrotesk-Regular mb-6">
             Fasilitas dasar yang diperlukan untuk pengalaman ekowisata yang nyaman dan aman:
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 font-AktivGrotesk-Regular">
             {fasilitas.map((f, idx) => (
               <FacilityCard key={idx} facility={f} index={idx} />
             ))}
           </div>
-          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <div className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg font-AktivGrotesk-Regular">
+            <div className="flex flex-col sm:flex-row items-start gap-3">
+              <Info className="w-5 h-5 text-blue-600 flex-shrink-0" />
               <div>
-                <h4 className="font-AktivGrotesk font-bold text-blue-800 mb-2">Tips Persiapan:</h4>
-                <ul className="text-blue-700 text-sm font-AktivGrotesk space-y-1">
+                <h4 className="font-AktivGrotesk-Regular text-blue-800 mb-2">Tips Persiapan:</h4>
+                <ul className="text-blue-700 text-sm space-y-1">
                   <li>• Bawa pakaian ganti dan perlengkapan mandi</li>
                   <li>• Sunscreen dan topi untuk perlindungan matahari</li>
                   <li>• Kamera tahan air untuk dokumentasi</li>
@@ -522,49 +485,42 @@ export default function EkowisataBalembangan() {
           </div>
         </Section>
 
-        {/* Contact Section */}
+        {/* Contact */}
         <div className="bg-[#1B602F] rounded-lg p-8 text-center text-white">
           <div className="w-16 h-16 bg-white/20 rounded-lg flex items-center justify-center mx-auto mb-6">
             <Phone className="w-8 h-8" />
           </div>
-          <h3 className="text-3xl font-AktivGrotesk font-bold mb-4">Siap untuk Petualangan?</h3>
-          <p className="text-lg font-AktivGrotesk text-green-100 mb-8 max-w-2xl mx-auto">
+          <h3 className="text-2xl sm:text-3xl mb-4 font-AktivGrotesk-Regular">Siap untuk Petualangan?</h3>
+          <p className="text-base sm:text-lg font-AktivGrotesk-Regular text-green-100 mb-8 max-w-2xl mx-auto px-2">
             Bergabunglah dengan pengalaman ekowisata yang tak terlupakan dan berkontribusi 
             langsung pada konservasi penyu hijau di habitat aslinya
           </p>
-          
-          {/* Contact Info */}
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <div className="bg-white/10 rounded-lg p-4">
               <Phone className="w-6 h-6 mx-auto mb-2" />
-              <p className="font-AktivGrotesk font-bold">Reservasi</p>
-              <p className="text-green-100 text-sm font-AktivGrotesk">24/7 Customer Service</p>
+              <p className="font-AktivGrotesk-Regular">Reservasi</p>
+              <p className="text-green-100 text-sm">24/7 Customer Service</p>
             </div>
             <div className="bg-white/10 rounded-lg p-4">
               <Users className="w-6 h-6 mx-auto mb-2" />
-              <p className="font-AktivGrotesk font-bold">Grup Kecil</p>
-              <p className="text-green-100 text-sm font-AktivGrotesk">Max 15 orang/trip</p>
+              <p className="font-AktivGrotesk-Regular">Grup Kecil</p>
+              <p className="text-green-100 text-sm">Max 15 orang/trip</p>
             </div>
             <div className="bg-white/10 rounded-lg p-4">
               <Shield className="w-6 h-6 mx-auto mb-2" />
-              <p className="font-AktivGrotesk font-bold">Asuransi</p>
-              <p className="text-green-100 text-sm font-AktivGrotesk">Keamanan terjamin</p>
+              <p className="font-AktivGrotesk-Regular">Asuransi</p>
+              <p className="text-green-100 text-sm">Keamanan terjamin</p>
             </div>
           </div>
 
-          <div className="bg-white/10 rounded-lg p-6 inline-block">
-            <p className="font-AktivGrotesk font-bold text-2xl mb-2">🐢 MALIPE Call Center</p>
-            <p className="text-green-100 font-AktivGrotesk mb-4">Pusat Informasi & Reservasi</p>
+          <div className="bg-white/10 rounded-lg p-6 inline-block font-AktivGrotesk-Regular">
+            <p className="text-xl sm:text-2xl mb-2">🐢 MALIPE Call Center</p>
+            <p className="text-green-100 mb-4">Pusat Informasi & Reservasi</p>
             <div className="flex flex-wrap justify-center gap-2">
-              <span className="px-3 py-1 bg-white/20 rounded-full text-sm font-AktivGrotesk">
-                📞 WhatsApp Ready
-              </span>
-              <span className="px-3 py-1 bg-white/20 rounded-full text-sm font-AktivGrotesk">
-                ⚡ Respon Cepat
-              </span>
-              <span className="px-3 py-1 bg-white/20 rounded-full text-sm font-AktivGrotesk">
-                🎯 Konsultasi Gratis
-              </span>
+              <span className="px-3 py-1 bg-white/20 rounded-full text-sm">📞 WhatsApp Ready</span>
+              <span className="px-3 py-1 bg-white/20 rounded-full text-sm">⚡ Respon Cepat</span>
+              <span className="px-3 py-1 bg-white/20 rounded-full text-sm">🎯 Konsultasi Gratis</span>
             </div>
           </div>
         </div>
