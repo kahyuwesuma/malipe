@@ -58,7 +58,7 @@ const Hero = () => {
                 alt={`slide-${index}`}
                 width={1600}
                 height={800}
-                className="w-full h-full object-cover"
+                className="w-full font-AktivGrotesk-Regular h-full object-cover"
                 priority={index === 0}
               />
               {/* Overlay */}
@@ -69,10 +69,10 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
-                className="absolute text-white z-10 px-6 lg:px-28"
+                className="absolute font-AktivGrotesk-Regular text-white z-10 px-6 lg:px-28"
               >
                 <div className="max-w-2xl flex flex-col gap-4">
-                  <h1 className="text-2xl lg:text-5xl font-bold drop-shadow-lg">
+                  <h1 className="text-2xl lg:text-5xl font-AktivGrotesk-Bold drop-shadow-lg">
                     {useAutoTranslate(item.title)}
                   </h1>
                   <p className="text-sm lg:text-lg font-light drop-shadow-md">

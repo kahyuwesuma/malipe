@@ -2,70 +2,42 @@
 import { useState } from "react"
 import { Clock, MapPin, Users, Camera, Waves, TreePine, Phone, ChevronDown, ChevronUp, AlertCircle, CheckCircle2, Calendar, Info, Shield, Sun, Moon, Sunrise, Sunset, ChevronLeft, ChevronRight, Star, Award, Compass, Anchor } from "lucide-react"
 
-const TimelineCard = ({ item, dayColor, isActive, index }) => {
-  const [isHovered, setIsHovered] = useState(false)
-  
+const TimelineCard = ({ item, isActive, index }) => {
   return (
-    <div 
-      className={`flex-shrink-0 w-80 mx-4 transition-all duration-500 ${
-        isActive ? 'scale-110 z-10' : 'scale-95 opacity-70'
-      }`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className={`${dayColor.cardBg} rounded-2xl p-6 shadow-xl border-2 ${dayColor.border} hover:shadow-2xl transition-all duration-300 h-56 flex flex-col justify-between relative overflow-hidden group`}>
-        {/* Decorative Background */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${dayColor.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
-        
-        {/* Activity Number Badge */}
-        <div className="absolute top-4 right-4">
-          <div className={`w-8 h-8 ${dayColor.bg} rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg`}>
+    <div className={`flex-shrink-0 w-80 mx-4 transition-all duration-300 ${
+      isActive ? 'scale-105' : 'scale-95 opacity-60'
+    }`}>
+      <div className="bg-white rounded-lg p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-200 h-48 flex flex-col justify-between">
+        {/* Time and Number */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="bg-[#1B602F] text-white px-3 py-2 rounded-lg font-AktivGrotesk text-sm font-medium">
+            {item.time}
+          </div>
+          <div className="w-8 h-8 bg-[#1B602F] rounded-full flex items-center justify-center text-white text-sm font-AktivGrotesk font-bold">
             {index + 1}
           </div>
         </div>
-
-        {/* Time and Category */}
-        <div className="relative">
-          <div className="flex items-center justify-between mb-4">
-            <div className={`${dayColor.timeBg} ${dayColor.timeText} px-4 py-2 rounded-xl font-bold text-lg shadow-md`}>
-              {item.time}
-            </div>
-            <div className={`w-12 h-12 ${dayColor.bg} rounded-full flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300`}>
-              {getTimeIcon(item.time)}
+        
+        {/* Activity Category */}
+        {getActivityCategory(item.desc) && (
+          <div className="bg-green-100 text-[#1B602F] px-3 py-1 rounded-full text-xs font-AktivGrotesk font-medium inline-block mb-4 w-fit">
+            <div className="flex items-center gap-1">
+              {getCategoryIcon(getActivityCategory(item.desc))}
+              {getActivityCategory(item.desc)}
             </div>
           </div>
-          
-          {/* Activity Category */}
-          {getActivityCategory(item.desc) && (
-            <div className={`px-3 py-1 ${dayColor.categoryBg} ${dayColor.categoryText} rounded-full text-sm font-medium inline-block mb-4 w-fit shadow-sm`}>
-              <div className="flex items-center gap-1">
-                {getCategoryIcon(getActivityCategory(item.desc))}
-                {getActivityCategory(item.desc)}
-              </div>
-            </div>
-          )}
-        </div>
+        )}
         
         {/* Description */}
-        <div className="flex-1 flex items-center relative">
-          <p className="text-gray-700 leading-relaxed text-base font-medium">{item.desc}</p>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="mt-4">
-          <div className="w-full bg-gray-200 rounded-full h-1">
-            <div 
-              className={`${dayColor.bg} h-1 rounded-full transition-all duration-300`}
-              style={{ width: isActive ? '100%' : '0%' }}
-            ></div>
-          </div>
+        <div className="flex-1 flex items-center">
+          <p className="text-gray-700 text-sm font-AktivGrotesk leading-relaxed">{item.desc}</p>
         </div>
       </div>
     </div>
   )
 }
 
-const HorizontalTimeline = ({ items, dayColor, currentIndex, onIndexChange, dayTitle }) => {
+const HorizontalTimeline = ({ items, currentIndex, onIndexChange }) => {
   const canGoLeft = currentIndex > 0
   const canGoRight = currentIndex < items.length - 1
   
@@ -74,39 +46,38 @@ const HorizontalTimeline = ({ items, dayColor, currentIndex, onIndexChange, dayT
       {/* Navigation Arrows */}
       <button
         onClick={() => canGoLeft && onIndexChange(currentIndex - 1)}
-        className={`absolute left-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 ${
+        className={`absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 ${
           canGoLeft 
-            ? `${dayColor.bg} text-white hover:shadow-2xl hover:scale-110 active:scale-95` 
+            ? 'bg-[#1B602F] text-white hover:shadow-xl' 
             : 'bg-gray-200 text-gray-400 cursor-not-allowed'
         }`}
         disabled={!canGoLeft}
       >
-        <ChevronLeft size={28} />
+        <ChevronLeft size={20} />
       </button>
       
       <button
         onClick={() => canGoRight && onIndexChange(currentIndex + 1)}
-        className={`absolute right-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 ${
+        className={`absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 ${
           canGoRight 
-            ? `${dayColor.bg} text-white hover:shadow-2xl hover:scale-110 active:scale-95` 
+            ? 'bg-[#1B602F] text-white hover:shadow-xl' 
             : 'bg-gray-200 text-gray-400 cursor-not-allowed'
         }`}
         disabled={!canGoRight}
       >
-        <ChevronRight size={28} />
+        <ChevronRight size={20} />
       </button>
 
       {/* Timeline Container */}
-      <div className="overflow-hidden mx-20">
+      <div className="overflow-hidden mx-16">
         <div 
-          className="flex transition-transform duration-500 ease-out"
+          className="flex transition-transform duration-300 ease-out"
           style={{ transform: `translateX(-${currentIndex * 320}px)` }}
         >
           {items.map((item, idx) => (
             <TimelineCard
               key={idx}
               item={item}
-              dayColor={dayColor}
               isActive={idx === currentIndex}
               index={idx}
             />
@@ -115,27 +86,23 @@ const HorizontalTimeline = ({ items, dayColor, currentIndex, onIndexChange, dayT
       </div>
 
       {/* Progress Indicators */}
-      <div className="flex justify-center mt-8 gap-3">
+      <div className="flex justify-center mt-6 gap-2">
         {items.map((_, idx) => (
           <button
             key={idx}
             onClick={() => onIndexChange(idx)}
-            className={`relative transition-all duration-300 ${
+            className={`transition-all duration-200 ${
               idx === currentIndex 
-                ? `w-8 h-4 ${dayColor.bg} rounded-full` 
-                : 'w-4 h-4 bg-gray-300 hover:bg-gray-400 rounded-full hover:scale-110'
+                ? 'w-6 h-3 bg-[#1B602F] rounded-full' 
+                : 'w-3 h-3 bg-gray-300 hover:bg-gray-400 rounded-full'
             }`}
-          >
-            {idx === currentIndex && (
-              <div className="absolute inset-0 bg-white/30 rounded-full animate-pulse"></div>
-            )}
-          </button>
+          />
         ))}
       </div>
 
       {/* Current Position Counter */}
-      <div className="text-center mt-6">
-        <div className={`inline-flex items-center gap-2 text-sm font-bold ${dayColor.timeText} ${dayColor.timeBg} px-4 py-2 rounded-full shadow-md`}>
+      <div className="text-center mt-4">
+        <div className="inline-flex items-center gap-2 text-sm font-AktivGrotesk font-medium text-[#1B602F] bg-green-50 px-3 py-2 rounded-full">
           <Clock size={16} />
           <span>{currentIndex + 1} dari {items.length} kegiatan</span>
         </div>
@@ -144,46 +111,32 @@ const HorizontalTimeline = ({ items, dayColor, currentIndex, onIndexChange, dayT
   )
 }
 
-const DayHeader = ({ day, title, subtitle, color, icon, stats }) => (
-  <div className={`${color.headerBg} rounded-2xl p-8 mb-8 shadow-2xl border-2 ${color.headerBorder} relative overflow-hidden`}>
-    {/* Decorative Elements */}
-    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-bl-full"></div>
-    <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-tr-full"></div>
-    
-    <div className="relative flex items-center justify-between">
-      <div className="flex items-center gap-6">
-        <div className={`w-20 h-20 ${color.iconBg} rounded-2xl flex items-center justify-center shadow-xl backdrop-blur-sm`}>
+const DayHeader = ({ day, title, subtitle, icon, stats }) => (
+  <div className="bg-[#1B602F] rounded-lg p-6 mb-6 shadow-lg text-white">
+    <div className="flex items-center justify-between">
+      <div className="flex items-center gap-4">
+        <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
           {icon}
         </div>
         <div>
-          <div className={`inline-block px-3 py-1 bg-white/20 rounded-full text-sm font-medium ${color.headerSubtext} mb-2`}>
-            {day}
-          </div>
-          <h3 className={`text-3xl font-bold ${color.headerText} mb-2`}>{title}</h3>
-          <p className={`text-lg ${color.headerDesc} leading-relaxed max-w-md`}>{subtitle}</p>
+          <div className="text-green-200 text-xs font-AktivGrotesk font-medium mb-1">{day}</div>
+          <h3 className="text-xl font-AktivGrotesk font-bold mb-1">{title}</h3>
+          <p className="text-green-100 text-sm font-AktivGrotesk">{subtitle}</p>
         </div>
       </div>
       
       {/* Stats */}
-      <div className="hidden lg:flex flex-col gap-3">
+      <div className="hidden md:flex gap-4">
         {stats.map((stat, idx) => (
-          <div key={idx} className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2 text-center">
-            <div className={`text-2xl font-bold ${color.headerText}`}>{stat.value}</div>
-            <div className={`text-sm ${color.headerSubtext}`}>{stat.label}</div>
+          <div key={idx} className="bg-white/20 rounded-lg px-3 py-2 text-center">
+            <div className="text-lg font-AktivGrotesk font-bold">{stat.value}</div>
+            <div className="text-xs font-AktivGrotesk text-green-200">{stat.label}</div>
           </div>
         ))}
       </div>
     </div>
   </div>
 )
-
-const getTimeIcon = (time) => {
-  const hour = parseInt(time.split('.')[0])
-  if (hour >= 5 && hour < 10) return <Sunrise className="w-6 h-6 text-white" />
-  if (hour >= 10 && hour < 17) return <Sun className="w-6 h-6 text-white" />
-  if (hour >= 17 && hour < 20) return <Sunset className="w-6 h-6 text-white" />
-  return <Moon className="w-6 h-6 text-white" />
-}
 
 const getActivityCategory = (desc) => {
   if (desc.includes('Perjalanan')) return 'Transport'
@@ -192,55 +145,46 @@ const getActivityCategory = (desc) => {
   if (desc.includes('berenang') || desc.includes('mancing')) return 'Rekreasi'
   if (desc.includes('presentasi')) return 'Edukasi'
   if (desc.includes('istirahat') || desc.includes('bebas')) return 'Istirahat'
-  return 'Aktivitas'
+  return null
 }
 
 const getCategoryIcon = (category) => {
   const iconMap = {
-    'Transport': <Compass size={14} />,
-    'Konservasi': <Shield size={14} />,
-    'Penyu': <Waves size={14} />,
-    'Rekreasi': <Star size={14} />,
-    'Edukasi': <Award size={14} />,
-    'Istirahat': <Moon size={14} />,
-    'Aktivitas': <Anchor size={14} />
+    'Transport': <Compass size={12} />,
+    'Konservasi': <Shield size={12} />,
+    'Penyu': <Waves size={12} />,
+    'Rekreasi': <Star size={12} />,
+    'Edukasi': <Award size={12} />,
+    'Istirahat': <Moon size={12} />
   }
-  return iconMap[category] || <Anchor size={14} />
+  return iconMap[category]
 }
 
-const Section = ({ title, children, icon, collapsible = false, defaultExpanded = true, gradient = false }) => {
+const Section = ({ title, children, icon, collapsible = false, defaultExpanded = true }) => {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded)
   
   return (
-    <div className={`rounded-3xl shadow-2xl border border-gray-200 overflow-hidden ${
-      gradient ? 'bg-gradient-to-br from-white to-gray-50' : 'bg-white'
-    }`}>
+    <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden mb-8">
       <div 
-        className={`p-8 ${collapsible ? 'cursor-pointer hover:bg-gray-50 transition-colors' : ''} border-b border-gray-100 ${
-          gradient ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white' : ''
-        }`}
+        className={`p-6 ${collapsible ? 'cursor-pointer hover:bg-gray-50' : ''} border-b border-gray-100`}
         onClick={() => collapsible && setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg ${
-              gradient ? 'bg-white/20' : 'bg-gradient-to-br from-emerald-400 to-teal-500 text-white'
-            }`}>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-[#1B602F] rounded-lg flex items-center justify-center text-white">
               {icon}
             </div>
-            <h2 className={`text-3xl font-bold ${gradient ? 'text-white' : 'text-gray-800'}`}>{title}</h2>
+            <h2 className="text-xl font-AktivGrotesk font-bold text-gray-800">{title}</h2>
           </div>
           {collapsible && (
-            <div className={`transition-colors hover:scale-110 transform duration-200 ${
-              gradient ? 'text-white/80 hover:text-white' : 'text-gray-400 hover:text-gray-600'
-            }`}>
-              {isExpanded ? <ChevronUp size={28} /> : <ChevronDown size={28} />}
+            <div className="text-gray-400">
+              {isExpanded ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
             </div>
           )}
         </div>
       </div>
       {(!collapsible || isExpanded) && (
-        <div className="p-8">
+        <div className="p-6">
           {children}
         </div>
       )}
@@ -248,61 +192,58 @@ const Section = ({ title, children, icon, collapsible = false, defaultExpanded =
   )
 }
 
-const InfoCard = ({ icon, title, description, color = "emerald", stats }) => (
-  <div className={`bg-gradient-to-br from-${color}-50 to-${color}-100 border-2 border-${color}-200 rounded-2xl p-8 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group relative overflow-hidden`}>
-    <div className={`absolute inset-0 bg-gradient-to-br from-${color}-400/10 to-${color}-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
-    <div className="relative">
-      <div className={`w-16 h-16 bg-gradient-to-br from-${color}-400 to-${color}-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-        {icon}
-      </div>
-      <h3 className={`font-bold text-${color}-900 text-xl mb-4`}>{title}</h3>
-      <p className={`text-${color}-700 text-sm leading-relaxed mb-4`}>{description}</p>
-      {stats && (
-        <div className={`inline-block px-4 py-2 bg-${color}-200 rounded-full text-${color}-800 font-bold text-sm`}>
-          {stats}
-        </div>
-      )}
+const InfoCard = ({ icon, title, description, stats }) => (
+  <div className="bg-white border border-gray-200 rounded-lg p-6 text-center hover:shadow-lg transition-shadow duration-200">
+    <div className="w-12 h-12 bg-[#1B602F] rounded-lg flex items-center justify-center text-white mx-auto mb-4">
+      {icon}
     </div>
+    <h3 className="font-AktivGrotesk font-bold text-gray-800 text-lg mb-2">{title}</h3>
+    <p className="text-gray-600 text-sm font-AktivGrotesk mb-3">{description}</p>
+    {stats && (
+      <div className="inline-block px-3 py-1 bg-green-50 text-[#1B602F] rounded-full font-AktivGrotesk font-medium text-sm">
+        {stats}
+      </div>
+    )}
   </div>
 )
 
-const StatsCard = ({ label, value, icon, color, description }) => (
-  <div className="bg-white rounded-2xl p-6 shadow-xl border border-gray-200 text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group">
-    <div className={`w-16 h-16 bg-gradient-to-br from-${color}-400 to-${color}-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+const StatsCard = ({ label, value, icon, description }) => (
+  <div className="bg-white rounded-lg p-6 shadow-lg border border-gray-200 text-center hover:shadow-xl transition-shadow duration-200">
+    <div className="w-12 h-12 bg-[#1B602F] rounded-lg flex items-center justify-center text-white mx-auto mb-3">
       {icon}
     </div>
-    <div className={`text-3xl font-bold bg-gradient-to-r from-${color}-600 to-${color}-700 bg-clip-text text-transparent mb-2`}>{value}</div>
-    <div className="text-sm text-gray-600 font-medium mb-1">{label}</div>
+    <div className="text-2xl font-AktivGrotesk font-bold text-[#1B602F] mb-1">{value}</div>
+    <div className="text-sm text-gray-600 font-AktivGrotesk font-medium mb-1">{label}</div>
     {description && (
-      <div className="text-xs text-gray-500">{description}</div>
+      <div className="text-xs text-gray-500 font-AktivGrotesk">{description}</div>
     )}
   </div>
 )
 
 const RulesCard = ({ rule, index }) => (
-  <div className={`p-6 rounded-2xl border-2 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group ${
+  <div className={`p-4 rounded-lg border transition-shadow duration-200 hover:shadow-md ${
     rule.type === 'warning' 
-      ? 'bg-gradient-to-br from-red-50 to-red-100 border-red-200 hover:from-red-100 hover:to-red-200' 
-      : 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 hover:from-blue-100 hover:to-blue-200'
+      ? 'bg-red-50 border-red-200' 
+      : 'bg-blue-50 border-blue-200'
   }`}>
-    <div className="flex items-start gap-4">
-      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300 ${
-        rule.type === 'warning' ? 'bg-gradient-to-br from-red-400 to-red-500' : 'bg-gradient-to-br from-blue-400 to-blue-500'
+    <div className="flex items-start gap-3">
+      <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+        rule.type === 'warning' ? 'bg-red-500' : 'bg-blue-500'
       }`}>
         {rule.type === 'warning' ? 
-          <AlertCircle className="w-6 h-6 text-white" /> : 
-          <Info className="w-6 h-6 text-white" />
+          <AlertCircle className="w-4 h-4 text-white" /> : 
+          <Info className="w-4 h-4 text-white" />
         }
       </div>
       <div className="flex-1">
-        <div className={`px-3 py-1 rounded-full text-xs font-bold mb-3 inline-block shadow-sm ${
+        <div className={`px-2 py-1 rounded text-xs font-AktivGrotesk font-bold mb-2 inline-block ${
           rule.type === 'warning' 
             ? 'bg-red-200 text-red-800' 
             : 'bg-blue-200 text-blue-800'
         }`}>
-          {rule.type === 'warning' ? '⚠️ LARANGAN' : '✅ WAJIB'} #{index + 1}
+          {rule.type === 'warning' ? 'LARANGAN' : 'WAJIB'} #{index + 1}
         </div>
-        <p className={`text-sm leading-relaxed font-medium ${
+        <p className={`text-sm font-AktivGrotesk ${
           rule.type === 'warning' ? 'text-red-800' : 'text-blue-800'
         }`}>
           {rule.text}
@@ -313,24 +254,24 @@ const RulesCard = ({ rule, index }) => (
 )
 
 const FacilityCard = ({ facility, index }) => (
-  <div className="bg-white rounded-2xl p-6 shadow-xl border border-gray-200 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group">
-    <div className="flex items-start gap-4">
+  <div className="bg-white rounded-lg p-4 shadow border border-gray-200 hover:shadow-lg transition-shadow duration-200">
+    <div className="flex items-start gap-3">
       <div className="flex-shrink-0">
-        <div className="w-16 h-16 bg-gradient-to-br from-teal-400 to-teal-500 rounded-2xl flex items-center justify-center text-3xl mb-3 shadow-lg group-hover:scale-110 transition-transform duration-300">
+        <div className="w-12 h-12 bg-[#1B602F] rounded-lg flex items-center justify-center text-2xl mb-2">
           {facility.icon}
         </div>
         <div className="text-center">
-          <span className="text-xs font-bold text-teal-600 bg-teal-100 px-3 py-1 rounded-full">
+          <span className="text-xs font-AktivGrotesk font-bold text-[#1B602F] bg-green-100 px-2 py-1 rounded">
             #{index + 1}
           </span>
         </div>
       </div>
       <div className="flex-1">
-        <p className="text-gray-700 text-sm leading-relaxed mb-3 font-medium">{facility.text}</p>
+        <p className="text-gray-700 text-sm font-AktivGrotesk mb-2">{facility.text}</p>
         <div className="flex items-center gap-2">
           <CheckCircle2 className="w-4 h-4 text-green-600" />
-          <span className="text-xs font-bold text-green-700 bg-green-100 px-2 py-1 rounded-full">
-            ✅ Tersedia
+          <span className="text-xs font-AktivGrotesk font-medium text-green-700 bg-green-100 px-2 py-1 rounded">
+            Tersedia
           </span>
         </div>
       </div>
@@ -379,58 +320,6 @@ export default function EkowisataBalembangan() {
     { text: "Bawa perlengkapan tenda, snorkeling, pancing, kamera diperbolehkan", icon: "🎒" },
   ]
 
-  // Enhanced color schemes
-  const dayColors = {
-    day1: {
-      bg: 'bg-blue-500',
-      gradient: 'from-blue-400 to-blue-600',
-      cardBg: 'bg-blue-50',
-      border: 'border-blue-200',
-      timeBg: 'bg-blue-100',
-      timeText: 'text-blue-800',
-      categoryBg: 'bg-blue-200',
-      categoryText: 'text-blue-800',
-      headerBg: 'bg-gradient-to-r from-blue-500 to-blue-600',
-      headerBorder: 'border-blue-300',
-      headerText: 'text-white',
-      headerSubtext: 'text-blue-100',
-      headerDesc: 'text-blue-200',
-      iconBg: 'bg-white/20'
-    },
-    day2: {
-      bg: 'bg-purple-500',
-      gradient: 'from-purple-400 to-purple-600',
-      cardBg: 'bg-purple-50',
-      border: 'border-purple-200',
-      timeBg: 'bg-purple-100',
-      timeText: 'text-purple-800',
-      categoryBg: 'bg-purple-200',
-      categoryText: 'text-purple-800',
-      headerBg: 'bg-gradient-to-r from-purple-500 to-purple-600',
-      headerBorder: 'border-purple-300',
-      headerText: 'text-white',
-      headerSubtext: 'text-purple-100',
-      headerDesc: 'text-purple-200',
-      iconBg: 'bg-white/20'
-    },
-    day3: {
-      bg: 'bg-orange-500',
-      gradient: 'from-orange-400 to-orange-600',
-      cardBg: 'bg-orange-50',
-      border: 'border-orange-200',
-      timeBg: 'bg-orange-100',
-      timeText: 'text-orange-800',
-      categoryBg: 'bg-orange-200',
-      categoryText: 'text-orange-800',
-      headerBg: 'bg-gradient-to-r from-orange-500 to-orange-600',
-      headerBorder: 'border-orange-300',
-      headerText: 'text-white',
-      headerSubtext: 'text-orange-100',
-      headerDesc: 'text-orange-200',
-      iconBg: 'bg-white/20'
-    }
-  }
-
   const renderTimeline = () => {
     const day1 = jadwal.slice(0, 6)
     const day2 = jadwal.slice(6, 15)
@@ -452,26 +341,21 @@ export default function EkowisataBalembangan() {
     }
 
     return (
-      <div className="space-y-16">
+      <div className="space-y-12">
         {/* Day 1 */}
         <div>
           <DayHeader 
             day="HARI PERTAMA"
             title="Perjalanan & Pengenalan"
-            subtitle="Memulai petualangan menuju pulau tak berpenghuni dengan perjalanan laut yang menakjubkan"
-            color={dayColors.day1}
-            icon={<MapPin className="w-10 h-10 text-white" />}
+            subtitle="Memulai petualangan menuju pulau tak berpenghuni"
+            icon={<MapPin className="w-6 h-6 text-white" />}
             stats={dayStats.day1}
           />
-          <div className="mt-8">
-            <HorizontalTimeline
-              items={day1}
-              dayColor={dayColors.day1}
-              currentIndex={day1Index}
-              onIndexChange={setDay1Index}
-              dayTitle="Hari Pertama"
-            />
-          </div>
+          <HorizontalTimeline
+            items={day1}
+            currentIndex={day1Index}
+            onIndexChange={setDay1Index}
+          />
         </div>
 
         {/* Day 2 */}
@@ -479,20 +363,15 @@ export default function EkowisataBalembangan() {
           <DayHeader 
             day="HARI KEDUA"
             title="Aktivitas Konservasi"
-            subtitle="Hari yang penuh dengan aktivitas konservasi penyu dan edukasi lingkungan"
-            color={dayColors.day2}
-            icon={<Waves className="w-10 h-10 text-white" />}
+            subtitle="Hari penuh aktivitas konservasi penyu dan edukasi"
+            icon={<Waves className="w-6 h-6 text-white" />}
             stats={dayStats.day2}
           />
-          <div className="mt-8">
-            <HorizontalTimeline
-              items={day2}
-              dayColor={dayColors.day2}
-              currentIndex={day2Index}
-              onIndexChange={setDay2Index}
-              dayTitle="Hari Kedua"
-            />
-          </div>
+          <HorizontalTimeline
+            items={day2}
+            currentIndex={day2Index}
+            onIndexChange={setDay2Index}
+          />
         </div>
 
         {/* Day 3 */}
@@ -500,275 +379,192 @@ export default function EkowisataBalembangan() {
           <DayHeader 
             day="HARI KETIGA"
             title="Perjalanan Pulang"
-            subtitle="Mengakhiri petualangan dengan kenangan indah tentang konservasi alam"
-            color={dayColors.day3}
-            icon={<Sun className="w-10 h-10 text-white" />}
+            subtitle="Mengakhiri petualangan dengan kenangan indah"
+            icon={<Sun className="w-6 h-6 text-white" />}
             stats={dayStats.day3}
           />
-          <div className="mt-8">
-            <HorizontalTimeline
-              items={day3}
-              dayColor={dayColors.day3}
-              currentIndex={day3Index}
-              onIndexChange={setDay3Index}
-              dayTitle="Hari Ketiga"
-            />
-          </div>
+          <HorizontalTimeline
+            items={day3}
+            currentIndex={day3Index}
+            onIndexChange={setDay3Index}
+          />
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-emerald-200/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-teal-200/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-blue-200/15 rounded-full blur-2xl animate-bounce"></div>
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         
         {/* Hero Header */}
-        <div className="text-center mb-20">
-          <div className="mb-10">
-            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full mb-8 shadow-2xl animate-bounce">
-              <TreePine className="w-12 h-12 text-white" />
-            </div>
-            <div className="mb-6">
-              <div className="inline-block px-6 py-2 bg-emerald-100 rounded-full text-emerald-800 font-bold text-sm mb-4">
-                🌊 EKOWISATA PREMIUM
-              </div>
-            </div>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 bg-clip-text text-transparent mb-6">
-              Pulau Balembangan
-            </h1>
-            <p className="text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-10">
-              Jelajahi pulau tak berpenghuni seluas 9,3 hektar dan saksikan habitat alami penyu hijau di Kalimantan Timur
-            </p>
+        <div className="text-center mb-12">
+          <div className="w-16 h-16 bg-[#1B602F] rounded-lg flex items-center justify-center mx-auto mb-6">
+            <TreePine className="w-8 h-8 text-white" />
           </div>
+          <h1 className="text-4xl sm:text-5xl font-AktivGrotesk font-bold text-[#1B602F] mb-4">
+            Pulau Balembangan
+          </h1>
+          <p className="text-lg font-AktivGrotesk text-gray-600 max-w-3xl mx-auto mb-8">
+            Jelajahi pulau tak berpenghuni seluas 9,3 hektar dan saksikan habitat alami penyu hijau di Kalimantan Timur
+          </p>
           
-          {/* Enhanced Stats Cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-12">
+          {/* Stats Cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
             <StatsCard 
               label="Luas Pulau"
               value="9.3 Ha"
-              icon={<MapPin size={28} />}
-              color="emerald"
+              icon={<MapPin size={24} />}
               description="Tak berpenghuni"
             />
             <StatsCard 
               label="Durasi Trip"
               value="3D2N"
-              icon={<Calendar size={28} />}
-              color="blue"
+              icon={<Calendar size={24} />}
               description="Pengalaman lengkap"
             />
             <StatsCard 
               label="Total Aktivitas"
               value="16+"
-              icon={<Waves size={28} />}
-              color="teal"
+              icon={<Waves size={24} />}
               description="Kegiatan seru"
             />
             <StatsCard 
               label="Fokus Konservasi"
               value="100%"
-              icon={<Shield size={28} />}
-              color="purple"
+              icon={<Shield size={24} />}
               description="Ramah lingkungan"
             />
           </div>
           
-          {/* Enhanced Key Info Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          {/* Info Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <InfoCard 
-              icon={<MapPin size={28} />}
+              icon={<MapPin size={24} />}
               title="Lokasi Eksotis"
               description="Pulau tak berpenghuni dengan panorama alami yang menakjubkan dan pantai berpasir putih"
-              color="emerald"
               stats="9.3 Hektar"
             />
             <InfoCard 
-              icon={<Waves size={28} />}
+              icon={<Waves size={24} />}
               title="Konservasi Penyu"
               description="Habitat alami penyu hijau yang terlindungi dengan program pelestarian berkelanjutan"
-              color="teal"
               stats="Penyu Hijau"
             />
             <InfoCard 
-              icon={<Users size={28} />}
+              icon={<Users size={24} />}
               title="Pengalaman Edukatif"
               description="Belajar langsung tentang konservasi laut dan berpartisipasi dalam program pelestarian"
-              color="blue"
               stats="Hands-On"
             />
           </div>
         </div>
 
         {/* Timeline Schedule */}
-        <div className="mb-16">
-          <Section 
-            title="Timeline Kegiatan Ekowisata" 
-            icon={<Clock size={28} />}
-            collapsible={true}
-            defaultExpanded={true}
-            gradient={true}
-          >
-            {renderTimeline()}
-            <div className="mt-12 p-8 bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200 rounded-2xl shadow-lg">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <AlertCircle className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <p className="text-lg font-bold text-amber-800 mb-3">
-                    ⚠️ Catatan Penting Timeline:
-                  </p>
-                  <p className="text-amber-700 leading-relaxed">
-                    Timeline dapat berubah sesuai kondisi lapangan, cuaca, dan pasang surut air laut. 
-                    Tim profesional kami akan memberikan informasi terkini dan penyesuaian jadwal 
-                    sebelum keberangkatan untuk memastikan pengalaman terbaik dan keamanan peserta.
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-amber-200 text-amber-800 rounded-full text-sm font-medium">
-                      🌊 Tergantung Pasang Surut
-                    </span>
-                    <span className="px-3 py-1 bg-amber-200 text-amber-800 rounded-full text-sm font-medium">
-                      ☀️ Sesuai Cuaca
-                    </span>
-                    <span className="px-3 py-1 bg-amber-200 text-amber-800 rounded-full text-sm font-medium">
-                      🐢 Aktivitas Penyu Alami
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Section>
-        </div>
-
-        {/* Enhanced Tata Tertib */}
-        <div className="mb-16">
-          <Section title="Tata Tertib & Ketentuan" icon={<Shield size={28} />}>
-            <div className="mb-8">
-              <p className="text-gray-600 text-lg leading-relaxed">
-                Untuk menjaga kelestarian alam dan keamanan bersama, mohon patuhi ketentuan berikut:
-              </p>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {tataTertib.map((rule, idx) => (
-                <RulesCard key={idx} rule={rule} index={idx} />
-              ))}
-            </div>
-            <div className="mt-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl">
-              <div className="flex items-center gap-3 mb-3">
-                <CheckCircle2 className="w-6 h-6 text-green-600" />
-                <h4 className="font-bold text-green-800 text-lg">Komitmen Konservasi</h4>
-              </div>
-              <p className="text-green-700 leading-relaxed">
-                Setiap peserta berkontribusi langsung pada upaya konservasi penyu dan ekosistem laut. 
-                Pelanggaran serius akan mengakibatkan blacklist permanen untuk melindungi habitat alami.
-              </p>
-            </div>
-          </Section>
-        </div>
-
-        {/* Enhanced Fasilitas */}
-        <div className="mb-16">
-          <Section title="Fasilitas yang Disediakan" icon={<Camera size={28} />}>
-            <div className="mb-8">
-              <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                Kami menyediakan fasilitas dasar yang diperlukan untuk pengalaman ekowisata yang nyaman dan aman:
-              </p>
-              <div className="flex flex-wrap gap-3 mb-8">
-                <span className="px-4 py-2 bg-teal-100 text-teal-800 rounded-full font-medium">
-                  ✅ Keamanan Terjamin
-                </span>
-                <span className="px-4 py-2 bg-teal-100 text-teal-800 rounded-full font-medium">
-                  🌱 Ramah Lingkungan
-                </span>
-                <span className="px-4 py-2 bg-teal-100 text-teal-800 rounded-full font-medium">
-                  👥 Kapasitas Terbatas
-                </span>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {fasilitas.map((f, idx) => (
-                <FacilityCard key={idx} facility={f} index={idx} />
-              ))}
-            </div>
-            <div className="mt-8 p-6 bg-gradient-to-r from-blue-50 to-teal-50 border-2 border-blue-200 rounded-2xl">
-              <div className="flex items-start gap-4">
-                <Info className="w-6 h-6 text-blue-600 mt-1 flex-shrink-0" />
-                <div>
-                  <h4 className="font-bold text-blue-800 text-lg mb-2">💡 Tips Persiapan:</h4>
-                  <ul className="text-blue-700 space-y-1">
-                    <li>• Bawa pakaian ganti secukupnya dan perlengkapan mandi</li>
-                    <li>• Sunscreen dan topi untuk perlindungan dari matahari</li>
-                    <li>• Kamera tahan air untuk dokumentasi bawah laut</li>
-                    <li>• Obat-obatan pribadi dan P3K sederhana</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </Section>
-        </div>
-
-        {/* Enhanced Contact Section */}
-        <div className="relative">
-          <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 rounded-3xl p-12 text-center text-white shadow-2xl relative overflow-hidden">
-            {/* Decorative Elements */}
-            <div className="absolute inset-0 bg-black/10"></div>
-            <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-bl-full"></div>
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-tr-full"></div>
-            
-            <div className="relative">
-              <div className="mb-8">
-                <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full mb-6">
-                  <Phone className="w-10 h-10" />
-                </div>
-                <h3 className="text-4xl font-bold mb-4">Siap untuk Petualangan?</h3>
-                <p className="text-xl text-emerald-100 mb-8 max-w-3xl mx-auto leading-relaxed">
-                  Bergabunglah dengan pengalaman ekowisata yang tak terlupakan dan berkontribusi 
-                  langsung pada konservasi penyu hijau di habitat aslinya
+        <Section 
+          title="Timeline Kegiatan Ekowisata" 
+          icon={<Clock size={24} />}
+          collapsible={true}
+          defaultExpanded={true}
+        >
+          {renderTimeline()}
+          <div className="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="font-AktivGrotesk font-bold text-amber-800 mb-2">
+                  Catatan Penting Timeline:
+                </p>
+                <p className="text-amber-700 text-sm font-AktivGrotesk">
+                  Timeline dapat berubah sesuai kondisi cuaca dan pasang surut air laut. 
+                  Tim akan memberikan informasi terkini sebelum keberangkatan.
                 </p>
               </div>
-              
-              {/* Enhanced Contact Info */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                  <Phone className="w-8 h-8 mx-auto mb-3" />
-                  <p className="font-bold text-lg mb-1">Reservasi</p>
-                  <p className="text-emerald-100 text-sm">24/7 Customer Service</p>
-                </div>
-                <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                  <Users className="w-8 h-8 mx-auto mb-3" />
-                  <p className="font-bold text-lg mb-1">Grup Kecil</p>
-                  <p className="text-emerald-100 text-sm">Max 15 orang/trip</p>
-                </div>
-                <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                  <Shield className="w-8 h-8 mx-auto mb-3" />
-                  <p className="font-bold text-lg mb-1">Asuransi</p>
-                  <p className="text-emerald-100 text-sm">Keamanan terjamin</p>
-                </div>
-              </div>
+            </div>
+          </div>
+        </Section>
 
-              <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-8 inline-block border border-white/30">
-                <p className="font-bold text-3xl mb-2">🐢 MALIPE Call Center</p>
-                <p className="text-emerald-100 text-lg mb-4">Pusat Informasi & Reservasi</p>
-                <div className="flex flex-wrap justify-center gap-4">
-                  <span className="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">
-                    📞 WhatsApp Ready
-                  </span>
-                  <span className="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">
-                    ⚡ Respon Cepat
-                  </span>
-                  <span className="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">
-                    🎯 Konsultasi Gratis
-                  </span>
-                </div>
+        {/* Tata Tertib */}
+        <Section title="Tata Tertib & Ketentuan" icon={<Shield size={24} />}>
+          <p className="text-gray-600 font-AktivGrotesk mb-6">
+            Untuk menjaga kelestarian alam dan keamanan bersama, mohon patuhi ketentuan berikut:
+          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {tataTertib.map((rule, idx) => (
+              <RulesCard key={idx} rule={rule} index={idx} />
+            ))}
+          </div>
+        </Section>
+
+        {/* Fasilitas */}
+        <Section title="Fasilitas yang Disediakan" icon={<Camera size={24} />}>
+          <p className="text-gray-600 font-AktivGrotesk mb-6">
+            Fasilitas dasar yang diperlukan untuk pengalaman ekowisata yang nyaman dan aman:
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {fasilitas.map((f, idx) => (
+              <FacilityCard key={idx} facility={f} index={idx} />
+            ))}
+          </div>
+          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="flex items-start gap-3">
+              <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+              <div>
+                <h4 className="font-AktivGrotesk font-bold text-blue-800 mb-2">Tips Persiapan:</h4>
+                <ul className="text-blue-700 text-sm font-AktivGrotesk space-y-1">
+                  <li>• Bawa pakaian ganti dan perlengkapan mandi</li>
+                  <li>• Sunscreen dan topi untuk perlindungan matahari</li>
+                  <li>• Kamera tahan air untuk dokumentasi</li>
+                  <li>• Obat-obatan pribadi dan P3K sederhana</li>
+                </ul>
               </div>
+            </div>
+          </div>
+        </Section>
+
+        {/* Contact Section */}
+        <div className="bg-[#1B602F] rounded-lg p-8 text-center text-white">
+          <div className="w-16 h-16 bg-white/20 rounded-lg flex items-center justify-center mx-auto mb-6">
+            <Phone className="w-8 h-8" />
+          </div>
+          <h3 className="text-3xl font-AktivGrotesk font-bold mb-4">Siap untuk Petualangan?</h3>
+          <p className="text-lg font-AktivGrotesk text-green-100 mb-8 max-w-2xl mx-auto">
+            Bergabunglah dengan pengalaman ekowisata yang tak terlupakan dan berkontribusi 
+            langsung pada konservasi penyu hijau di habitat aslinya
+          </p>
+          
+          {/* Contact Info */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div className="bg-white/10 rounded-lg p-4">
+              <Phone className="w-6 h-6 mx-auto mb-2" />
+              <p className="font-AktivGrotesk font-bold">Reservasi</p>
+              <p className="text-green-100 text-sm font-AktivGrotesk">24/7 Customer Service</p>
+            </div>
+            <div className="bg-white/10 rounded-lg p-4">
+              <Users className="w-6 h-6 mx-auto mb-2" />
+              <p className="font-AktivGrotesk font-bold">Grup Kecil</p>
+              <p className="text-green-100 text-sm font-AktivGrotesk">Max 15 orang/trip</p>
+            </div>
+            <div className="bg-white/10 rounded-lg p-4">
+              <Shield className="w-6 h-6 mx-auto mb-2" />
+              <p className="font-AktivGrotesk font-bold">Asuransi</p>
+              <p className="text-green-100 text-sm font-AktivGrotesk">Keamanan terjamin</p>
+            </div>
+          </div>
+
+          <div className="bg-white/10 rounded-lg p-6 inline-block">
+            <p className="font-AktivGrotesk font-bold text-2xl mb-2">🐢 MALIPE Call Center</p>
+            <p className="text-green-100 font-AktivGrotesk mb-4">Pusat Informasi & Reservasi</p>
+            <div className="flex flex-wrap justify-center gap-2">
+              <span className="px-3 py-1 bg-white/20 rounded-full text-sm font-AktivGrotesk">
+                📞 WhatsApp Ready
+              </span>
+              <span className="px-3 py-1 bg-white/20 rounded-full text-sm font-AktivGrotesk">
+                ⚡ Respon Cepat
+              </span>
+              <span className="px-3 py-1 bg-white/20 rounded-full text-sm font-AktivGrotesk">
+                🎯 Konsultasi Gratis
+              </span>
             </div>
           </div>
         </div>

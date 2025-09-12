@@ -53,7 +53,7 @@ const Footer = () => {
 
   return (
     <footer className="relative w-full overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50">
+      <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-green-100 to-green-150">
         <div className="absolute inset-0 opacity-30">
           <svg
             className="absolute bottom-0 w-full h-20"
@@ -151,7 +151,7 @@ const Footer = () => {
                       "Setiap kontribusi membantu melindungi keajaiban bawah laut Indonesia"
                     )}
                   </p>
-                  <Button className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-medium py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 font-AktivGrotesk-Regular">
+                  <Button className="w-full bg-[#1B602F] hover:bg-[#144a25] text-white font-medium py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 font-AktivGrotesk-Regular">
                     <Link
                       href="https://paypal.me/Malipe202"
                       className="flex items-center justify-center gap-2"

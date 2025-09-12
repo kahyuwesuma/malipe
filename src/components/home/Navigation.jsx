@@ -62,7 +62,7 @@ const Counter = ({ target }) => {
   }, [started, target]);
 
   return (
-    <span ref={ref} className="text-3xl sm:text-4xl font-bold text-blue-600">
+    <span ref={ref} className="text-3xl sm:text-4xl font-bold text-green-800">
       {count.toLocaleString()}
     </span>
   );
@@ -71,7 +71,7 @@ const Counter = ({ target }) => {
 
 const Navigation = () => {
   return (
-    <section className="py-16 bg-gradient-to-b from-white to-blue-50">
+    <section className="py-16 bg-gradient-to-b font-AktivGrotesk-Bold">
       <div className="max-w-6xl mx-auto px-6 lg:px-12 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
