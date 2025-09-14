@@ -2,7 +2,10 @@
 "use client"
 
 import { useState } from "react"
-import { Clock, MapPin, Waves, Sun, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, AlertCircle, Camera, Users, TreePine } from "lucide-react"
+import { 
+  Clock, MapPin, Waves, Sun, ChevronUp, ChevronDown, 
+  AlertCircle, Camera, Users, TreePine 
+} from "lucide-react"
 
 // 🔹 Helper untuk kategori aktivitas
 const getActivityCategory = (desc) => {
@@ -23,136 +26,73 @@ const getCategoryIcon = (category) => {
   }
 }
 
+// 🔹 Jadwal
 const jadwal = [
-    { time: "08.00 – 14.00", desc: "Perjalanan dari Tanjung Redeb ke Pulau Balembangan" },
-    { time: "14.00 – 16.00", desc: "Berenang, mancing, bebas, ISHOMA" },
-    { time: "16.00 – 18.00", desc: "Pengenalan Pulau Balembangan" },
-    { time: "18.00 – 21.00", desc: "Release tukik, berenang, mancing, bebas" },
-    { time: "21.00 – 22.00", desc: "Patroli penyu (menyesuaikan pasang surut air)" },
-    { time: "22.00", desc: "Istirahat bebas" },
-    { time: "05.30 – 06.30", desc: "Sensus pagi penyu" },
-    { time: "06.30 – 08.00", desc: "Berenang, mancing, bebas, ISHOMA" },
-    { time: "08.00 – 10.00", desc: "Patroli sampah (pungut sampah sekitar pulau)" },
-    { time: "10.00 – 12.00", desc: "Presentasi Maratua Peduli Penyu" },
-    { time: "12.00 – 16.00", desc: "Berenang, mancing, bebas" },
-    { time: "16.00 – 18.00", desc: "Patroli dan release tukik" },
-    { time: "18.00 – 21.00", desc: "Berenang, mancing, bebas, ISHOMA" },
-    { time: "21.00 – 22.00", desc: "Patroli penyu (menyesuaikan pasang surut air laut)" },
-    { time: "22.00", desc: "Kegiatan bebas" },
-    { time: "06.00 – selesai", desc: "Perjalanan kembali ke Tanjung Redeb" },
-  ]
+  { time: "08.00 – 14.00", desc: "Perjalanan dari Tanjung Redeb ke Pulau Balembangan" },
+  { time: "14.00 – 16.00", desc: "Berenang, mancing, bebas, ISHOMA" },
+  { time: "16.00 – 18.00", desc: "Pengenalan Pulau Balembangan" },
+  { time: "18.00 – 21.00", desc: "Release tukik, berenang, mancing, bebas" },
+  { time: "21.00 – 22.00", desc: "Patroli penyu (menyesuaikan pasang surut air)" },
+  { time: "22.00", desc: "Istirahat bebas" },
+  { time: "05.30 – 06.30", desc: "Sensus pagi penyu" },
+  { time: "06.30 – 08.00", desc: "Berenang, mancing, bebas, ISHOMA" },
+  { time: "08.00 – 10.00", desc: "Patroli sampah (pungut sampah sekitar pulau)" },
+  { time: "10.00 – 12.00", desc: "Presentasi Maratua Peduli Penyu" },
+  { time: "12.00 – 16.00", desc: "Berenang, mancing, bebas" },
+  { time: "16.00 – 18.00", desc: "Patroli dan release tukik" },
+  { time: "18.00 – 21.00", desc: "Berenang, mancing, bebas, ISHOMA" },
+  { time: "21.00 – 22.00", desc: "Patroli penyu (menyesuaikan pasang surut air laut)" },
+  { time: "22.00", desc: "Kegiatan bebas" },
+  { time: "06.00 – selesai", desc: "Perjalanan kembali ke Tanjung Redeb" },
+]
 
 // 🔹 Kartu aktivitas di timeline
-const TimelineCard = ({ item, isActive, index }) => {
-  return (
-    <div className={`flex-shrink-0 w-72 sm:w-80 mx-2 sm:mx-4 transition-all duration-300 ${
-      isActive ? 'scale-90 sm:scale-90' : 'scale-85 sm:scale-95 opacity-60'
-    }`}>
-      <div className="bg-white rounded-lg p-4 sm:p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-200 h-44 sm:h-48 flex flex-col justify-between">
-        
-        {/* Time and Number */}
-        <div className="flex items-center justify-between mb-3 sm:mb-4">
-          <div className="bg-[#1B602F] text-white px-2 sm:px-3 py-1 sm:py-2 rounded-lg font-AktivGrotesk-Regular text-xs sm:text-sm">
-            {item.time}
-          </div>
-          <div className="w-7 h-7 sm:w-8 sm:h-8 bg-[#1B602F] rounded-full flex items-center justify-center text-white text-xs sm:text-sm font-AktivGrotesk-Regular">
-            {index + 1}
-          </div>
-        </div>
-        
-        {/* Activity Category */}
-        {getActivityCategory(item.desc) && (
-          <div className="bg-green-100 text-[#1B602F] px-2 sm:px-3 py-1 rounded-full text-xs font-AktivGrotesk-Regular inline-block mb-3 sm:mb-4 w-fit">
-            <div className="flex items-center gap-1">
-              {getCategoryIcon(getActivityCategory(item.desc))}
-              <span className="hidden sm:inline">{getActivityCategory(item.desc)}</span>
+const TimelineCard = ({ item, index }) => {
+    return (
+      <div className="flex-shrink-0 w-[85vw] max-w-xs sm:w-80 mx-auto sm:mx-4 snap-center">
+        <div className="bg-white rounded-lg p-4 sm:p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-200 h-44 sm:h-48 flex flex-col justify-between">
+          
+          {/* Time and Number */}
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <div className="bg-[#1B602F] text-white px-2 sm:px-3 py-1 sm:py-2 rounded-lg font-AktivGrotesk-Regular text-xs sm:text-sm">
+              {item.time}
+            </div>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-[#1B602F] rounded-full flex items-center justify-center text-white text-xs sm:text-sm font-AktivGrotesk-Regular">
+              {index + 1}
             </div>
           </div>
-        )}
-        
-        {/* Description */}
-        <div className="flex-1 flex items-center">
-          <p className="text-gray-700 text-xs sm:text-sm font-AktivGrotesk-Regular leading-relaxed line-clamp-3">{item.desc}</p>
+          
+          {/* Activity Category */}
+          {getActivityCategory(item.desc) && (
+            <div className="bg-green-100 text-[#1B602F] px-2 sm:px-3 py-1 rounded-full text-xs font-AktivGrotesk-Regular inline-block mb-3 sm:mb-4 w-fit">
+              <div className="flex items-center gap-1">
+                {getCategoryIcon(getActivityCategory(item.desc))}
+                <span className="hidden sm:inline">{getActivityCategory(item.desc)}</span>
+              </div>
+            </div>
+          )}
+          
+          {/* Description */}
+          <div className="flex-1 flex items-center">
+            <p className="text-gray-700 text-xs sm:text-sm font-AktivGrotesk-Regular leading-relaxed line-clamp-3">{item.desc}</p>
+          </div>
         </div>
       </div>
-    </div>
-  )
-}
-
-// 🔹 Timeline horizontal + navigasi
-const HorizontalTimeline = ({ items, currentIndex, onIndexChange }) => {
-  const canGoLeft = currentIndex > 0
-  const canGoRight = currentIndex < items.length - 1
+    )
+  }
   
-  return (
-    <div className="relative">
-      {/* Navigation Arrows */}
-      <button
-        onClick={() => canGoLeft && onIndexChange(currentIndex - 1)}
-        className={`absolute left-0 sm:left-0 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 ${
-          canGoLeft 
-            ? 'bg-[#1B602F] text-white hover:shadow-xl' 
-            : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-        }`}
-        disabled={!canGoLeft}
-      >
-        <ChevronLeft size={16} className="sm:w-5 sm:h-5" />
-      </button>
-      
-      <button
-        onClick={() => canGoRight && onIndexChange(currentIndex + 1)}
-        className={`absolute right-0 sm:right-0 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 ${
-          canGoRight 
-            ? 'bg-[#1B602F] text-white hover:shadow-xl' 
-            : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-        }`}
-        disabled={!canGoRight}
-      >
-        <ChevronRight size={16} className="sm:w-5 sm:h-5" />
-      </button>
-
-      {/* Timeline Container */}
-      <div className="overflow-hidden mx-10 sm:mx-16">
-        <div 
-          className="flex transition-transform duration-300 ease-out"
-          style={{ transform: `translateX(-${currentIndex * (typeof window !== "undefined" && window.innerWidth < 640 ? 296 : 320)}px)` }}
-        >
+// 🔹 Timeline horizontal (scroll-snap untuk mobile)
+const HorizontalTimeline = ({ items }) => {
+    return (
+      <div className="overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar px-6 sm:px-16">
+        <div className="flex gap-4">
           {items.map((item, idx) => (
-            <TimelineCard
-              key={idx}
-              item={item}
-              isActive={idx === currentIndex}
-              index={idx}
-            />
+            <TimelineCard key={idx} item={item} index={idx} />
           ))}
         </div>
       </div>
-
-      {/* Progress Indicators */}
-      <div className="flex justify-center mt-4 sm:mt-6 gap-1 sm:gap-2">
-        {items.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => onIndexChange(idx)}
-            className={`transition-all duration-200 ${
-              idx === currentIndex 
-                ? 'w-4 sm:w-6 h-2 sm:h-3 bg-[#1B602F] rounded-full' 
-                : 'w-2 sm:w-3 h-2 sm:h-3 bg-gray-300 hover:bg-gray-400 rounded-full'
-            }`}
-          />
-        ))}
-      </div>
-
-      {/* Current Position Counter */}
-      <div className="text-center mt-3 sm:mt-4">
-        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-AktivGrotesk-Regular text-[#1B602F] bg-green-50 px-2 sm:px-3 py-1 sm:py-2 rounded-full">
-          <Clock size={14} className="sm:w-4 sm:h-4" />
-          <span>{currentIndex + 1} dari {items.length} kegiatan</span>
-        </div>
-      </div>
-    </div>
-  )
-}
+    )
+  }  
 
 // 🔹 Header tiap hari
 const DayHeader = ({ day, title, subtitle, icon, stats }) => (
@@ -217,10 +157,6 @@ const Section = ({ title, children, icon, collapsible = false, defaultExpanded =
 
 // 🔹 Komponen Utama
 export default function EcoTimeline() {
-  const [day1Index, setDay1Index] = useState(0)
-  const [day2Index, setDay2Index] = useState(0)
-  const [day3Index, setDay3Index] = useState(0)
-
   const day1 = jadwal.slice(0, 6)
   const day2 = jadwal.slice(6, 15)
   const day3 = jadwal.slice(15)
@@ -257,11 +193,7 @@ export default function EcoTimeline() {
             icon={<MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-white" />}
             stats={dayStats.day1}
           />
-          <HorizontalTimeline
-            items={day1}
-            currentIndex={day1Index}
-            onIndexChange={setDay1Index}
-          />
+          <HorizontalTimeline items={day1} />
         </div>
 
         {/* Hari Kedua */}
@@ -273,11 +205,7 @@ export default function EcoTimeline() {
             icon={<Waves className="w-5 h-5 sm:w-6 sm:h-6 text-white" />}
             stats={dayStats.day2}
           />
-          <HorizontalTimeline
-            items={day2}
-            currentIndex={day2Index}
-            onIndexChange={setDay2Index}
-          />
+          <HorizontalTimeline items={day2} />
         </div>
 
         {/* Hari Ketiga */}
@@ -289,11 +217,7 @@ export default function EcoTimeline() {
             icon={<Sun className="w-5 h-5 sm:w-6 sm:h-6 text-white" />}
             stats={dayStats.day3}
           />
-          <HorizontalTimeline
-            items={day3}
-            currentIndex={day3Index}
-            onIndexChange={setDay3Index}
-          />
+          <HorizontalTimeline items={day3} />
         </div>
       </div>
 
