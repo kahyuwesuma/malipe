@@ -121,3 +121,18 @@ export async function fetchPublicationsById(id) {
 
   return data;
 }
+
+// Fetch semua gallery
+export async function fetchAllGallery() {
+  const { data, error } = await supabase
+    .from("gallery")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Gagal mengambil data:", error.message);
+    return [];
+  }
+
+  return data;
+}

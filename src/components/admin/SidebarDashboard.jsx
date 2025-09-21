@@ -18,7 +18,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { HandHeartIcon, NewspaperIcon } from "@phosphor-icons/react";
 import {
   BookIcon,
-  ProjectorScreenChartIcon,
+  ImagesIcon,
   SignOutIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import { supabase } from "@/utils/supabaseClient";
@@ -30,14 +30,9 @@ const items = [
     icon: <NewspaperIcon size={32} />,
   },
   {
-    title: "Projek Kami",
-    url: "/admin/projek-kami",
-    icon: <ProjectorScreenChartIcon size={32} />,
-  },
-  {
-    title: "Paket Donasi",
-    url: "/admin/donasi",
-    icon: <HandHeartIcon size={32} />,
+    title: "Galeri",
+    url: "/admin/galeri",
+    icon: <ImagesIcon size={32} />,
   },
   {
     title: "Publikasi",

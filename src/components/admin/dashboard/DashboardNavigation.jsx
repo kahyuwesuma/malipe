@@ -1,8 +1,7 @@
 import {
   BookIcon,
-  HandHeartIcon,
   NewspaperIcon,
-  ProjectorScreenChartIcon,
+  ImagesIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,14 +14,9 @@ const NavigationDashboard = () => {
       icon: <NewspaperIcon size={32} />,
     },
     {
-      title: "Projek Kami",
-      url: "/admin/projek-kami",
-      icon: <ProjectorScreenChartIcon size={32} />,
-    },
-    {
-      title: "Paket Donasi",
-      url: "/admin/donasi",
-      icon: <HandHeartIcon size={32} />,
+      title: "Galeri",
+      url: "/admin/galeri",
+      icon: <ImagesIcon size={32} />,
     },
     {
       title: "Publikasi",

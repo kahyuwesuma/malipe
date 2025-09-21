@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
+import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { PlusIcon, TrashIcon } from "@phosphor-icons/react/dist/ssr";
 import { Button } from "@/components/ui/button";
@@ -12,9 +14,11 @@ const DynamicContentRenderer = ({
   onChange,
 }) => {
   const [content, setContent] = useState(initialContent);
+  const [image, setImage] = useState("");
 
   const handleDelete = (id) => {
     const updated = content.filter((item) => item.id !== id);
+
     setContent(updated);
     onChange?.(updated);
   };
@@ -46,48 +50,24 @@ const DynamicContentRenderer = ({
 
   return (
     <div className="flex flex-col gap-6">
-      {content.length === 0 && (
-        <div className="border border-dashed border-gray-400 rounded p-6 text-center space-y-4">
-          <p className="text-sm text-gray-500">Belum ada konten ditambahkan</p>
-          <div className="flex flex-col lg:flex-row gap-2 justify-center">
-            <Button
-              type="button"
-              disabled={loading}
-              onClick={
-                () => handleAdd(null, "file") // tambahkan konten pertama tipe gambar
-              }
-              className="text-xs bg-blue-ylbkd cursor-pointer text-white flex items-center gap-1"
-            >
-              <PlusIcon size={14} /> Tambah Gambar
-            </Button>
-            <Button
-              type="button"
-              disabled={loading}
-              onClick={
-                () => handleAdd(null, "copyright") // tambahkan konten pertama tipe copyright
-              }
-              className="text-xs bg-blue-ylbkd cursor-pointer text-white flex items-center gap-1"
-            >
-              <PlusIcon size={14} /> Tambah Copyright
-            </Button>
-          </div>
-        </div>
-      )}
-
       {content.map((item, index) => (
         <div
           key={item.id}
           className="border border-gray-300 rounded p-4 shadow-sm space-y-2 relative"
         >
-          {/* header */}
           <div className="flex justify-between items-center">
             <p className="text-sm text-gray-500 font-medium">
               Konten {index + 1} (
-              {item.type === "copyright" ? "Hak Cipta" : "Gambar"})
+              {item.type === "text"
+                ? "Paragraf"
+                : item.type === "subtitle"
+                ? "Subjudul"
+                : item.type === "link"
+                ? "Link" 
+                : "Gambar"}
+              )
             </p>
             <Button
-              type="button"
-              disabled={loading}
               className="bg-transparent border border-red-500 cursor-pointer text-red-500 hover:text-white hover:border-white"
               onClick={() => handleDelete(item.id)}
             >
@@ -95,15 +75,34 @@ const DynamicContentRenderer = ({
             </Button>
           </div>
 
-          {/* isi konten */}
-          {item.type === "copyright" && (
+          {item.type === "subtitle" && (
             <Input
               className="text-sm lg:text-base"
-              type="text"
+              value={item.value}
+              disabled={loading}
+              onChange={(e) => handleChange(item.id, e.target.value)}
+              placeholder="Tulis subjudul..."
+            />
+          )}
+
+          {item.type === "text" && (
+            <Textarea
+              className="text-sm lg:text-base"
+              rows={4}
+              disabled={loading}
               value={item.value}
               onChange={(e) => handleChange(item.id, e.target.value)}
-              placeholder="Tambahkan hak cipta..."
+              placeholder="Tulis isi paragraf..."
+            />
+          )}
+          {item.type === "link" && (
+            <Textarea
+              className="text-sm lg:text-base"
+              rows={4}
               disabled={loading}
+              value={item.value}
+              onChange={(e) => handleChange(item.id, e.target.value)}
+              placeholder="Tulis isi link..."
             />
           )}
 
@@ -130,8 +129,23 @@ const DynamicContentRenderer = ({
             </div>
           )}
 
-          {/* tombol tambah setelah tiap konten */}
           <div className="flex flex-col lg:flex-row gap-2 mt-2">
+            <Button
+              type="button"
+              disabled={loading}
+              onClick={() => handleAdd(item.id, "text")}
+              className="text-xs bg-blue-ylbkd cursor-pointer text-white hover:underline flex items-center gap-1"
+            >
+              <PlusIcon size={14} /> Tambah Text
+            </Button>
+            <Button
+              type="button"
+              disabled={loading}
+              onClick={() => handleAdd(item.id, "subtitle")}
+              className="text-xs bg-blue-ylbkd cursor-pointer text-white hover:underline flex items-center gap-1"
+            >
+              <PlusIcon size={14} /> Tambah Subtitle
+            </Button>
             <Button
               type="button"
               disabled={loading}
@@ -143,10 +157,10 @@ const DynamicContentRenderer = ({
             <Button
               type="button"
               disabled={loading}
-              onClick={() => handleAdd(item.id, "copyright")}
+              onClick={() => handleAdd(item.id, "link")}
               className="text-xs bg-blue-ylbkd cursor-pointer text-white flex items-center gap-1"
             >
-              <PlusIcon size={14} /> Tambah Copyright
+              + Tambah Link
             </Button>
           </div>
         </div>
