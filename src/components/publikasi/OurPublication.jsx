@@ -6,13 +6,21 @@ import Link from "next/link";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { motion } from "framer-motion";
 import { Calendar, Clock, User, ArrowRight, BookOpen } from "lucide-react";
-import { supabase } from "@/utils/supabaseClient";
+import { useTranslation } from "../translate/TranslationContext";
+import { fetchAllPublications } from "@/utils/fetch/fecthDatabase";
 
 const OurPublication = () => {
   const [publications, setPublications] = useState([]);
   const [translated, setTranslated] = useState([]);
-  const { translateText } = useTranslation();
 
+  // state untuk teks statis
+  const [translatedTitle, setTranslatedTitle] = useState("");
+  const [translatedDesc, setTranslatedDesc] = useState("");
+  const [translatedNote, setTranslatedNote] = useState("");
+  const [translatedMinute, setTranslatedMinute] = useState("");
+  const [bacaSelengkapnya, setBacaSelengkapnya] = useState("");
+
+  const { translateText } = useTranslation();
 
   const getCategoryColor = (category) => {
     const colors = {
@@ -22,21 +30,17 @@ const OurPublication = () => {
     return colors[category] || "bg-gray-100 text-gray-700 border-gray-200";
   };
 
+  // ambil data publikasi
   useEffect(() => {
-    const fetchPublications = async () => {
-      const { data, error } = await supabase
-        .from("publications")
-        .select("*")
-        .order("date", { ascending: false });
-  
-      if (!error && data) {
-        setPublications(data);
-      }
+    const fetchData = async () => {
+      const data = await fetchAllPublications();
+      setPublications(data);
     };
-  
-    fetchPublications();
+
+    fetchData();
   }, []);
 
+  // translate data publikasi
   useEffect(() => {
     const doTranslate = async () => {
       const results = await Promise.all(
@@ -52,8 +56,28 @@ const OurPublication = () => {
     if (publications.length > 0) doTranslate();
   }, [publications, translateText]);
 
+  // translate teks statis (judul, desc, dll)
+  useEffect(() => {
+    const doStaticTranslate = async () => {
+      setTranslatedTitle(await translateText("Our Publications"));
+      setTranslatedDesc(
+        await translateText("Discover our reports and policy briefs.")
+      );
+      setTranslatedNote(
+        await translateText(
+          "These publications are curated by our research team."
+        )
+      );
+      setTranslatedMinute(await translateText("minutes"));
+      setBacaSelengkapnya(await translateText("Read more"));
+    };
+
+    doStaticTranslate();
+  }, [translateText]);
+
   return (
     <div className="flex-1 bg-gradient-to-br from-slate-50 to-blue-50/20 min-h-screen">
+      {/* Header Section */}
       <div className="text-center w-full px-5 py-16">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -74,13 +98,14 @@ const OurPublication = () => {
             {translatedDesc}
           </p>
           <div className="bg-blue-50/50 backdrop-blur-sm rounded-2xl p-6 border border-blue-100">
-            <p className="text-gray-700 font-AktivGrotesk-Regular  leading-relaxed">
+            <p className="text-gray-700 font-AktivGrotesk-Regular leading-relaxed">
               {translatedNote}
             </p>
           </div>
         </motion.div>
       </div>
 
+      {/* Publications Grid */}
       <div className="max-w-7xl mx-auto px-4 pb-16">
         <motion.div
           initial={{ opacity: 0 }}
@@ -97,7 +122,12 @@ const OurPublication = () => {
               viewport={{ once: true, margin: "-50px" }}
               className="group"
             >
-              <Link href={item.link} target="_blank" rel="noopener noreferrer" className="block">
+              <Link
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
                 <div className="bg-white/80 backdrop-blur-sm font-AktivGrotesk-Regular rounded-2xl overflow-hidden border border-white/60 hover:border-blue-200/50 transition-all duration-500 hover:shadow-xl hover:shadow-blue-100/20 hover:-translate-y-1">
                   <div className="relative overflow-hidden">
                     <AspectRatio ratio={16 / 9}>
@@ -110,7 +140,9 @@ const OurPublication = () => {
                       />
                     </AspectRatio>
                     <div
-                      className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-AktivGrotesk-Regular border ${getCategoryColor(item.category)}`}
+                      className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-AktivGrotesk-Regular border ${getCategoryColor(
+                        item.category
+                      )}`}
                     >
                       {item.category}
                     </div>
@@ -127,7 +159,9 @@ const OurPublication = () => {
                       </div>
                       <div className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />
-                        <span>{item.read_duration} {translatedMinute}</span>
+                        <span>
+                          {item.read_duration} {translatedMinute}
+                        </span>
                       </div>
                       <div className="flex items-center gap-1">
                         <User className="w-4 h-4" />
