@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useAutoTranslate } from "../translate/useAutoTranslate";
+import Image from "next/image";
+import hero from "@/asset/news/hero.jpg";
 
 const Hero = () => {
   const [isClient, setIsClient] = useState(false);
@@ -22,22 +24,13 @@ const Hero = () => {
   return (
     <>
     <div className="relative w-screen h-screen">
-        {/* Video Background */}
-        {isClient && (
-          <video
-            autoPlay
-            muted
-            playsInline
-            loop
-            className="absolute inset-0 w-full h-full object-cover"
-          >
-            <source
-              src="https://videos.pexels.com/video-files/855257/855257-uhd_2560_1440_25fps.mp4"
-              type="video/mp4"
-            />
-            Browser tidak mendukung video.
-          </video>
-        )}
+    <Image
+          src={hero}
+          alt="Hero"
+          fill
+          className="object-cover h-full"
+          priority
+        />
 
         {/* Overlay */}
         <div className="absolute inset-0 bg-black/50 z-10" />
