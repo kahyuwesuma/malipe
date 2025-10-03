@@ -2,32 +2,343 @@
 import Image from "next/image";
 import { Card, CardContent } from "../ui/card";
 import { AspectRatio } from "../ui/aspect-ratio";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { fetchAllDonations } from "@/utils/fetch/fecthDatabase";
 import { SpinnerIcon } from "@phosphor-icons/react/dist/ssr";
 import { motion } from "framer-motion";
 import { useAutoTranslate } from "../translate/useAutoTranslate";
 import { useTranslation } from "../translate/TranslationContext";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import { Button } from "../ui/button";
+import { Textarea } from "../ui/textarea";
+import { Alert, AlertDescription } from "../ui/alert";
+import { Upload, CheckCircle, AlertCircle } from "lucide-react";
 
+// ============= DONATION FORM MODAL COMPONENT =============
+const DonationFormModal = ({ item, onClose }) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    amount: "",
+    message: "",
+    proofImage: null,
+  });
+  const [previewImage, setPreviewImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        setError("Ukuran file maksimal 5MB");
+        return;
+      }
+      setFormData((prev) => ({ ...prev, proofImage: file }));
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+      setError("");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      // Validasi
+      if (!formData.name || !formData.email || !formData.amount) {
+        throw new Error("Mohon lengkapi data wajib (Nama, Email, Jumlah Donasi)");
+      }
+
+      if (!formData.proofImage) {
+        throw new Error("Mohon upload bukti transfer");
+      }
+
+      // Upload image ke Supabase Storage
+      const fileExt = formData.proofImage.name.split(".").pop();
+      const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
+      
+      const formDataToSend = new FormData();
+      formDataToSend.append("file", formData.proofImage);
+      formDataToSend.append("fileName", fileName);
+
+      // Upload ke storage
+      const uploadRes = await fetch("/api/upload-donation-proof", {
+        method: "POST",
+        body: formDataToSend,
+      });
+
+      if (!uploadRes.ok) throw new Error("Gagal upload bukti");
+
+      const { url: imageUrl } = await uploadRes.json();
+
+      // Simpan data donasi ke database
+      const donationData = {
+        donor_name: formData.name,
+        donor_email: formData.email,
+        donor_phone: formData.phone || null,
+        donation_package_id: item.id,
+        donation_package_title: item.translatedTitle || item.title,
+        amount: parseFloat(formData.amount),
+        message: formData.message || null,
+        proof_image_url: imageUrl,
+        status: "pending",
+        created_at: new Date().toISOString(),
+      };
+
+      const saveRes = await fetch("/api/save-donation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(donationData),
+      });
+
+      if (!saveRes.ok) throw new Error("Gagal menyimpan data donasi");
+
+      setSuccess(true);
+      
+      setTimeout(() => {
+        setSuccess(false);
+        onClose();
+      }, 3000);
+
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <CardContent className="p-6">
+          {success ? (
+            <div className="flex flex-col items-center justify-center py-12 gap-4">
+              <CheckCircle className="w-16 h-16 text-green-500" />
+              <h3 className="text-2xl font-AktivGrotesk-Medium text-center">
+                Donasi Berhasil Dikirim!
+              </h3>
+              <p className="text-center text-muted-foreground">
+                Terima kasih atas donasi Anda. Tim kami akan menghubungi Anda segera melalui email.
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h2 className="text-2xl font-AktivGrotesk-Medium mb-2">
+                    Form Donasi
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    {item.translatedTitle || item.title}
+                  </p>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onClose}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  ✕
+                </Button>
+              </div>
+
+              {error && (
+                <Alert variant="destructive" className="mb-4">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
+
+              <div className="space-y-4">
+                {/* Nama */}
+                <div>
+                  <Label htmlFor="name">
+                    Nama Lengkap <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder="Masukkan nama lengkap"
+                    required
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <Label htmlFor="email">
+                    Email <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="email@example.com"
+                    required
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Email akan digunakan untuk update perkembangan sarang
+                  </p>
+                </div>
+
+                {/* Phone */}
+                <div>
+                  <Label htmlFor="phone">Nomor Telepon (Opsional)</Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    placeholder="+62 xxx xxxx xxxx"
+                  />
+                </div>
+
+                {/* Amount */}
+                <div>
+                  <Label htmlFor="amount">
+                    Jumlah Donasi (USD) <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="amount"
+                    name="amount"
+                    type="number"
+                    step="0.01"
+                    value={formData.amount}
+                    onChange={handleInputChange}
+                    placeholder="0.00"
+                    required
+                  />
+                </div>
+
+                {/* PayPal Link */}
+                <div className="bg-blue-50 p-4 rounded-lg">
+                  <Label className="mb-2 block">Link PayPal:</Label>
+                  <a
+                    href="https://www.paypal.com/paypalme/Malipe2021"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline font-medium"
+                  >
+                    https://www.paypal.com/paypalme/Malipe2021
+                  </a>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Klik link di atas untuk melakukan donasi via PayPal, lalu upload bukti transfer di bawah
+                  </p>
+                </div>
+
+                {/* Upload Proof */}
+                <div>
+                  <Label htmlFor="proofImage">
+                    Bukti Transfer <span className="text-red-500">*</span>
+                  </Label>
+                  <div className="mt-2">
+                    <label
+                      htmlFor="proofImage"
+                      className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-50"
+                    >
+                      {previewImage ? (
+                        <img
+                          src={previewImage}
+                          alt="Preview"
+                          className="h-full object-contain"
+                        />
+                      ) : (
+                        <div className="flex flex-col items-center">
+                          <Upload className="w-8 h-8 text-gray-400" />
+                          <p className="text-sm text-gray-500 mt-2">
+                            Klik untuk upload bukti transfer
+                          </p>
+                          <p className="text-xs text-gray-400">
+                            PNG, JPG, JPEG (Max 5MB)
+                          </p>
+                        </div>
+                      )}
+                    </label>
+                    <input
+                      id="proofImage"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Message */}
+                <div>
+                  <Label htmlFor="message">Pesan (Opsional)</Label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder="Tulis pesan Anda..."
+                    rows={3}
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <div className="flex gap-3 pt-4">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={onClose}
+                    className="flex-1"
+                  >
+                    Batal
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={handleSubmit}
+                    disabled={loading}
+                    className="flex-1"
+                  >
+                    {loading ? "Mengirim..." : "Kirim Donasi"}
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+// ============= MAIN DONATION SECTION COMPONENT =============
 const DonationSection = () => {
   const [donations, setDonations] = useState([]);
   const [translatedDonations, setTranslatedDonations] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [usdValues, setUsdValues] = useState({}); // 🔑 simpan hasil konversi USD
+  const [usdValues, setUsdValues] = useState({});
+  const [selectedDonation, setSelectedDonation] = useState(null);
 
   const { translateText } = useTranslation();
 
   const translatedDonasi = useAutoTranslate("Donasi");
   const translatedBelumAdaPaket = useAutoTranslate("Belum ada paket donasi");
   const translatedTidakAdaGambar = useAutoTranslate("Tidak ada gambar");
-  const suffixMap = {
-    acara: { idr: "/Acara", usd: "/Event" },
-    minggu: { idr: "/Minggu", usd: "/Week" },
-    patroli: { idr: "/Patroli", usd: "/Patrol" },
-  };
 
-  // 🔑 Load data donasi
+  // Load data donasi
   useEffect(() => {
     const loadData = async () => {
       const result = await fetchAllDonations();
@@ -37,7 +348,7 @@ const DonationSection = () => {
     loadData();
   }, []);
 
-  // 🔑 Translate title + kategori
+  // Translate title + kategori
   useEffect(() => {
     const translateContent = async () => {
       if (donations.length > 0) {
@@ -48,7 +359,6 @@ const DonationSection = () => {
               item.category || "Lainnya"
             );
 
-            // mapping suffix IDR / USD
             let idrSuffix = "";
             if (item.category?.toLowerCase() === "acara") {
               idrSuffix = await translateText("/Acara");
@@ -72,7 +382,7 @@ const DonationSection = () => {
     translateContent();
   }, [donations, translateText]);
 
-  // 🔑 Fetch konversi IDR → USD untuk setiap donasi
+  // Fetch konversi IDR → USD
   useEffect(() => {
     const fetchUsdValues = async () => {
       const results = {};
@@ -138,7 +448,6 @@ const DonationSection = () => {
               {translatedDonasi}
             </h1>
 
-            {/* Render all donations without category grouping */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {translatedDonations.map((item, index) => (
                 <motion.div
@@ -149,10 +458,9 @@ const DonationSection = () => {
                   viewport={{ once: true }}
                   className="w-full max-w-none mx-auto"
                 >
-                  <Link
-                    href={item.payment_url}
-                    target="_blank"
-                    className="group block h-full"
+                  <button
+                    onClick={() => setSelectedDonation(item)}
+                    className="group block h-full w-full text-left"
                   >
                     <Card className="h-full py-0 border-0 shadow-none flex flex-col rounded-t-3xl rounded-b-none overflow-hidden transition-all duration-200 group-hover:scale-[1.02]">
                       {/* Image Container */}
@@ -207,7 +515,6 @@ const DonationSection = () => {
                           </div>
                         </div>
 
-                        {/* Optional: Add a call-to-action indicator */}
                         <div className="mt-4 pt-3">
                           <span className="text-xs text-muted-foreground/70 font-AktivGrotesk-Regular flex items-center gap-1">
                             Klik untuk donasi
@@ -228,13 +535,21 @@ const DonationSection = () => {
                         </div>
                       </div>
                     </Card>
-                  </Link>
+                  </button>
                 </motion.div>
               ))}
             </div>
           </CardContent>
         </Card>
       </div>
+
+      {/* Modal Form */}
+      {selectedDonation && (
+        <DonationFormModal
+          item={selectedDonation}
+          onClose={() => setSelectedDonation(null)}
+        />
+      )}
     </div>
   );
 };
