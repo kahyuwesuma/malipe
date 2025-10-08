@@ -62,8 +62,7 @@ const Navbar = () => {
             })}
             <NavigationMenuLink
               className="hidden sm:block bg-blue-ylbkd lg:text-sm sm:text-xs rounded font-AktivGrotesk-Regular hover:bg-white text-white hover:text-blue-ylbkd border border-blue-ylbkd hover:border-blue-ylbkd font-medium"
-              href="https://paypal.me/Malipe2021"
-              target="_blank"
+              href="/donasi"
               rel="noopener noreferrer"
             >
               {useAutoTranslate("Donasi")}

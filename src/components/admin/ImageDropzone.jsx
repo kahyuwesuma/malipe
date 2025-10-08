@@ -1,7 +1,9 @@
 import { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
+import { useAutoTranslate } from "../translate/useAutoTranslate";
 
 const ImageDropzone = ({ onFileUpload, existingImage }) => {
+  const tFileName = useAutoTranslate("Nama File:");
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
@@ -55,25 +57,25 @@ const ImageDropzone = ({ onFileUpload, existingImage }) => {
       >
         <input {...getInputProps()} />
         {isDragActive ? (
-          <p className="text-blue-500 ">Letakkan file di sini ...</p>
+          <p className="text-blue-500 ">{useAutoTranslate("Letakkan file di sini ...")}</p>
         ) : files.length > 0 ? (
           <p className="text-white ">
-            Tarik & letakkan gambar di sini, atau klik untuk mengganti gambar
+            {useAutoTranslate("Tarik & letakkan gambar di sini, atau klik untuk mengganti gambar")}
           </p>
         ) : (
           <p className="text-gray-500 ">
-            Tarik & letakkan gambar di sini, atau klik untuk memilih gambar
+            {useAutoTranslate("Tarik & letakkan gambar di sini, atau klik untuk memilih gambar")}
           </p>
         )}
       </div>
       {files.length > 0 ? (
         <div className="bg-white truncate rounded-sm py-1 px-2 text-sm relative">
           <span className="">
-            {files[0].preview.name ? `Nama File: ${files[0].preview.name}` : ""}
+            {files[0].preview.name ? `${tFileName} ${files[0].preview.name}` : ""}
           </span>
           {files.map((file, index) => (
             <span className="" key={index}>
-              {file.name ? `Nama File: ${file.name}` : ""}
+              {file.name ? `${tFileName} ${file.name}` : ""}
             </span>
           ))}
         </div>

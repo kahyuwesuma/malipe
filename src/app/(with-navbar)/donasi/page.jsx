@@ -1,11 +1,11 @@
-import DonationSection from "@/components/donasi/DonationSection"
+import Donation from "@/components/donasi/Donation"
 import Hero from "@/components/donasi/Hero"
 
 const Page = () => {
   return(
     <>
       <Hero/>
-      <DonationSection/>
+      <Donation/>
     </>
   )
 }

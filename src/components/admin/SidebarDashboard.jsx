@@ -39,6 +39,11 @@ const items = [
     url: "/admin/publikasi",
     icon: <BookIcon size={32} />,
   },
+  {
+    title: "Donasi",
+    url: "/admin/donasi",
+    icon: <HandHeartIcon size={32} />,
+  },
 ];
 
 const SidebarDashboard = () => {

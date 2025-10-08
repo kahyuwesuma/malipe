@@ -2,6 +2,7 @@ import {
   BookIcon,
   NewspaperIcon,
   ImagesIcon,
+  HandHeartIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
@@ -22,6 +23,11 @@ const NavigationDashboard = () => {
       title: "Publikasi",
       url: "/admin/publikasi",
       icon: <BookIcon size={32} />,
+    },
+    {
+      title: "Donasi",
+      url: "/admin/donasi",
+      icon: <HandHeartIcon size={32} />,
     },
   ];
   return (
