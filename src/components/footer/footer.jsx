@@ -153,7 +153,7 @@ const Footer = () => {
                   </p>
                   <Button className="w-full bg-[#1B602F] hover:bg-[#144a25] text-white font-medium py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 font-AktivGrotesk-Regular">
                     <Link
-                      href="https://paypal.me/Malipe2021"
+                      href="/donasi"
                       className="flex items-center justify-center gap-2"
                     >
                       {useAutoTranslate("Donasi Sekarang")}
