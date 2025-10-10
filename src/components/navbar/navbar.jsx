@@ -99,6 +99,7 @@ const Navbar = () => {
                   </Link>
                 </SheetClose>
               ))}
+              
               <SheetClose asChild>
                 <Link
                   className="text-lg rounded-lg p-4 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-100 font-medium"
