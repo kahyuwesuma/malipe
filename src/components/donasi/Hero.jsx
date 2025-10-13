@@ -17,7 +17,7 @@ const Hero = () => {
 
   return (
     <>
-    <div className="relative w-screen h-screen">
+      <div className="relative w-screen h-screen">
         <Image
           src={donasi_hero}
           alt="Hero"
@@ -43,7 +43,7 @@ const Hero = () => {
             className="text-2xl font-AktivGrotesk-Medium"
           >
             {useAutoTranslate("Maratua Peduli Penyu")}
-          </motion.button>
+          </motion.h2>
 
           <motion.button
             initial={{ opacity: 0, y: 10 }}
