@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ChevronRight, Heart, Waves, Thermometer, Leaf, Navigation, Clock } from "lucide-react";
+
+// Import the image from src/asset/home
+import penyuHijauImage from "../../asset/home/penyu-hijau.jpg";
 
 export default function EdukasiPenyu() {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -63,7 +65,7 @@ export default function EdukasiPenyu() {
                 )}
                 
                 <Image
-                  src="/images/penyu-hijau.jpg"
+                  src={penyuHijauImage}
                   alt="Penyu Hijau berenang di perairan Indonesia"
                   fill
                   className={`object-cover transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
