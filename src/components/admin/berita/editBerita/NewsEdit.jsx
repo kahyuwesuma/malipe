@@ -297,7 +297,7 @@ const NewsEdit = () => {
 
       <Button
         type="submit"
-        className="bg-blue-ylbkd cursor-pointer"
+        className="bg-blue-ylbkd text-white cursor-pointer"
         disabled={loading}
       >
         {loading
