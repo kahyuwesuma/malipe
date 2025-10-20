@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Mail, Lock, Eye, EyeOff, AlertCircle, Loader2, ArrowLeft } from "lucide-react";
+import { login } from "./actions";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -9,25 +10,36 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleLogin = async (formData) => {
     setIsLoading(true);
     setError(null);
 
-    // Simulasi login
-    setTimeout(() => {
-      if (email === "demo@malipe.com" && password === "password") {
-        console.log("Login berhasil");
-        // router.push("/admin/dashboard");
+    try {
+      const error = await login(formData);
+
+      if (error) {
+        setError(error);
       } else {
-        setError("Email atau kata sandi salah");
+        setTimeout(() => {
+          router.push("/admin/dashboard");
+        }, 500);
       }
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
+  };
+
+  const loggingIn = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+    await handleLogin(formData);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br font-AktivGrotesk-Regular from-emerald-50 via-green-50 to-teal-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Card */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
@@ -55,7 +67,7 @@ export default function LoginPage() {
           )}
 
           {/* Form */}
-          <div className="space-y-5">
+          <form onSubmit={loggingIn} className="space-y-5">
             {/* Email Input */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
@@ -110,11 +122,11 @@ export default function LoginPage() {
             </div>
 
             {/* Forgot Password Link */}
-            <div className="text-right">
+            {/* <div className="text-right">
               <a href="#" className="text-sm text-emerald-600 hover:text-emerald-700 font-medium transition-colors">
                 Lupa kata sandi?
               </a>
-            </div>
+            </div> */}
 
             {/* Buttons */}
             <div className="flex gap-3 pt-2">
@@ -122,17 +134,16 @@ export default function LoginPage() {
                 type="button"
                 onClick={() => console.log("Kembali")}
                 disabled={isLoading}
-                className="flex-1 py-3 px-4 border border-slate-300 text-slate-700 rounded-xl font-medium hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="flex-1 cursor-pointer py-3 px-4 border border-slate-300 text-slate-700 rounded-xl font-medium hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Kembali
               </button>
               
               <button
-                type="button"
-                onClick={handleLogin}
+                type="submit"
                 disabled={isLoading || !email || !password}
-                className="flex-1 py-3 px-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl font-medium hover:from-emerald-600 hover:to-green-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 flex items-center justify-center gap-2"
+                className="flex-1 cursor-pointer py-3 px-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl font-medium hover:from-emerald-600 hover:to-green-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 flex items-center justify-center gap-2"
               >
                 {isLoading ? (
                   <>
@@ -144,7 +155,7 @@ export default function LoginPage() {
                 )}
               </button>
             </div>
-          </div>
+          </form>
         </div>
 
         {/* Footer */}

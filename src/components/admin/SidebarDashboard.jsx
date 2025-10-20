@@ -53,7 +53,7 @@ const SidebarDashboard = () => {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    document.cookie = "sb-sbazfnpvudwtrtsivxib-auth-token=; Max-Age=0; path=/";
+    document.cookie = "sb-ggliqakxvuuxdgqitghw-auth-token=; Max-Age=0; path=/";
     router.replace("/");
   };
 
