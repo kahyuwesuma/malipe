@@ -79,6 +79,7 @@ const DonationsList = () => {
                     <TableHead>Email</TableHead>
                     <TableHead>Pesan</TableHead>
                     <TableHead>Nominal</TableHead>
+                    <TableHead>Nominal</TableHead>
                     <TableHead>Tanggal</TableHead>
                     <TableHead className="text-center">Kirim Email</TableHead>
                   </TableRow>
@@ -111,6 +112,9 @@ const DonationsList = () => {
                         {donation.nominal
                           ? `$${Number(donation.nominal).toLocaleString("id-ID")}`
                           : "-"}
+                      </TableCell>
+                      <TableCell className="max-w-xs capitalize truncate">
+                        {donation.donation_type || "-"}
                       </TableCell>
                       <TableCell>
                         {donation.created_at

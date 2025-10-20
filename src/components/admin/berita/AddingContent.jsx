@@ -329,7 +329,7 @@ const AddingContent = () => {
                       Batal
                     </Button>
                   </DialogClose>
-                  <Button type="submit" className="cursor-pointer">
+                  <Button type="submit" className="cursor-pointer text-white">
                     Simpan
                   </Button>
                 </DialogFooter>

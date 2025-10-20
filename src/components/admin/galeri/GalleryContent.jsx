@@ -130,9 +130,9 @@ const GalleryContent = () => {
                 <DialogTrigger asChild>
                   <Button
                     type="button"
-                    className="cursor-pointer text-white bg-red-500 border border-red-500 hover:bg-transparent hover:text-red-500"
+                    className="cursor-pointer text-xs text-white bg-red-500 border border-red-500 hover:bg-transparent hover:text-red-500"
                   >
-                    Hapus Projek <TrashIcon size={20} />
+                    Hapus <TrashIcon size={20} />
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-md font-AktivGrotesk-Regular">

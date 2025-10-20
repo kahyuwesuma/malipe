@@ -21,7 +21,7 @@ import { useUploadThing } from "@/utils/uploadthing";
 import Link from "next/link";
 import { useAutoTranslate } from "../translate/useAutoTranslate";
 
-export default function FormDonation({ trigger, onSuccess, onError }) {
+export default function FormDonation({ trigger, onSuccess, onError, donationType }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -68,6 +68,7 @@ export default function FormDonation({ trigger, onSuccess, onError }) {
           nominal: parseInt(formData.nominal),
           message: formData.message,
           payment_receipt_image: imageUrl,
+          donation_type: donationType === "nest" ? "khusus" : "umum",
         },
       ]);
 
@@ -162,7 +163,7 @@ export default function FormDonation({ trigger, onSuccess, onError }) {
                 disabled={loading}
                 className="w-full cursor-pointer bg-gradient-to-r from-green-100 via-green-200 to-green-300 text-black hover:from-green-200 hover:via-green-300 hover:to-green-400 transition-colors duration-300 font-semibold py-3 rounded-full"
               >
-                {loading ? useAutoTranslate("Mengrim...") : useAutoTranslate("Kirim")}
+                {loading ? useAutoTranslate("Mengirim...") : useAutoTranslate("Kirim")}
               </Button>
               <div className="mt-1 flex justify-center items-center gap-1 text-sm text-gray-600">
                 <span>{useAutoTranslate("Belum melakukan pembayaran?")}{" "}</span>

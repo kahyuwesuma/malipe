@@ -22,6 +22,7 @@ import {
   SignOutIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import { supabase } from "@/utils/supabaseClient";
+import logo_malipe from "@/asset/home/logo-300x124.webp"
 
 const items = [
   {
@@ -63,7 +64,7 @@ const SidebarDashboard = () => {
           <SidebarGroup>
             <SidebarGroupLabel className="flex justify-start mx-4 lg:mx-8 py-14">
               <Link href="/admin/dashboard">
-                <Image src={logo_ylbkd} width={130} alt="logo_ylbkd" />
+                <Image src={logo_malipe} width={130} alt="logo_ylbkd" />
               </Link>
             </SidebarGroupLabel>
             <SidebarGroupContent>
