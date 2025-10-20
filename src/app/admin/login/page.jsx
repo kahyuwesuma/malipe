@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Mail, Lock, Eye, EyeOff, AlertCircle, Loader2, ArrowLeft } from "lucide-react";
 import { login } from "./actions";
 
-export default function LoginPage() {
+export default function Page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);

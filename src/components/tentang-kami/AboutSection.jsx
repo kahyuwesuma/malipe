@@ -11,6 +11,7 @@ import patroli from "@/asset/tentang-kami/patroli.jpeg";
 import sekolah from "@/asset/tentang-kami/sekolah.jpg";
 import perdagangan from "@/asset/tentang-kami/perdagangan.jpg";
 import profile1 from "@/asset/tentang-kami/profile1.jpeg";
+import profile2 from "@/asset/tentang-kami/profile2.jpg";
 import about1 from "@/asset/tentang-kami/about1.jpg";
 
 const activities = [
@@ -72,9 +73,32 @@ export default function AboutSection() {
             <h2 className="text-3xl font-bold text-gray-800 mb-2">Muhammad Ardian</h2>
             <p className="text-lg text-[#1B602F] font-semibold mb-4">Chairman MALIPE</p>
             <p className="text-gray-600 leading-relaxed">
-              Memimpin organisasi konservasi penyu dengan dedikasi tinggi untuk melindungi 
-              habitat penyu dan ekosistem laut. Berkomitmen membangun kesadaran masyarakat 
-              tentang pentingnya konservasi melalui program-program berkelanjutan.
+              Memimpin organisasi konservasi penyu dengan dedikasi tinggi untuk melindungi habitat penyu dan ekosistem laut. Berkomitmen membangun kesadaran masyarakat tentang pentingnya konservasi melalui program-program berkelanjutan.
+            </p>
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div 
+        className="max-w-4xl mx-auto px-6 mb-20"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="flex flex-col md:flex-row items-center gap-8 bg-white rounded-2xl shadow-lg p-8">
+          <div className="relative w-48 h-64 flex-shrink-0 rounded-xl overflow-hidden shadow-md">
+            <Image
+              src={profile2}
+              alt="Yunda Zuliarsih"
+              fill
+              className="object-cover object-top"
+            />
+          </div>
+          <div className="flex-1 text-center md:text-left">
+            <h2 className="text-3xl font-bold text-gray-800 mb-2">Yunda Zuliarsih</h2>
+            <p className="text-lg text-[#1B602F] font-semibold mb-4"></p>
+            <p className="text-gray-600 leading-relaxed">
+            Mendukung jalannya organisasi konservasi penyu dengan ketelitian dan tanggung jawab tinggi. Berperan aktif dalam mendukung kelancaran program konservasi serta menjaga koordinasi yang efektif antar anggota untuk mewujudkan tujuan pelestarian ekosistem laut yang berkelanjutan.
             </p>
           </div>
         </div>
