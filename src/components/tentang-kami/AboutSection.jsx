@@ -11,7 +11,7 @@ import patroli from "@/asset/tentang-kami/patroli.jpeg";
 import sekolah from "@/asset/tentang-kami/sekolah.jpg";
 import perdagangan from "@/asset/tentang-kami/perdagangan.jpg";
 import profile1 from "@/asset/tentang-kami/profile1.jpeg";
-import profile2 from "@/asset/tentang-kami/profile2.jpg";
+import profile2 from "@/asset/tentang-kami/IMG-20251204-WA0019.jpg";
 import about1 from "@/asset/tentang-kami/about1.jpg";
 
 const activities = [
